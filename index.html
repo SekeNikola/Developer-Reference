@@ -1,0 +1,1267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A11Y Reference — WCAG 2.2 Developer Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0d0d;
+    --surface: #141414;
+    --surface2: #1a1a1a;
+    --surface3: #222222;
+    --border: rgba(255,255,255,0.07);
+    --border-med: rgba(255,255,255,0.13);
+    --text: #f0f0f0;
+    --text-muted: #888;
+    --text-faint: #444;
+    --blue: #0066ff;
+    --blue-dim: rgba(0,102,255,0.1);
+    --blue-bright: #4d9bff;
+    --cyan: #00c8ff;
+    --cyan-dim: rgba(0,200,255,0.1);
+    --green: #00e676;
+    --green-dim: rgba(0,230,118,0.1);
+    --red: #ff4444;
+    --red-dim: rgba(255,68,68,0.1);
+    --yellow: #ffcc00;
+    --yellow-dim: rgba(255,204,0,0.1);
+    --mono: 'IBM Plex Mono', monospace;
+    --sans: 'IBM Plex Sans', system-ui, sans-serif;
+    --r: 4px;
+    --rl: 6px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--sans);background:var(--bg);color:var(--text);line-height:1.7;font-size:16px}
+  .layout{display:grid;grid-template-columns:260px 1fr;min-height:100vh}
+
+  /* ── Sidebar ── */
+  .sidebar{background:var(--surface);border-right:1px solid var(--border);position:sticky;top:0;height:100vh;overflow-y:auto;display:flex;flex-direction:column}
+  .sidebar::-webkit-scrollbar{width:3px}
+  .sidebar::-webkit-scrollbar-thumb{background:var(--border-med)}
+  .brand{padding:22px 18px 18px;border-bottom:1px solid var(--border)}
+  .brand-tag{font-family:var(--mono);font-size:10px;font-weight:500;color:var(--blue);letter-spacing:.12em;text-transform:uppercase;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+  .brand-tag::before{content:"";display:inline-block;width:6px;height:6px;background:var(--blue);border-radius:1px}
+  .brand h1{font-size:16px;font-weight:600;color:var(--text);letter-spacing:-.01em;line-height:1.3}
+  .brand p{font-family:var(--mono);font-size:10px;color:var(--text-faint);margin-top:4px;letter-spacing:.05em}
+
+  /* Search */
+  .search-wrap{padding:12px 18px;border-bottom:1px solid var(--border)}
+  .search-box{width:100%;background:var(--surface2);border:1px solid var(--border-med);border-radius:var(--r);padding:7px 10px 7px 30px;font-family:var(--sans);font-size:12.5px;color:var(--text);outline:none;transition:border-color .15s;position:relative}
+  .search-box::placeholder{color:var(--text-faint)}
+  .search-box:focus{border-color:var(--blue)}
+  .search-wrap-inner{position:relative}
+  .search-icon{position:absolute;left:9px;top:50%;transform:translateY(-50%);color:var(--text-faint);font-size:12px;pointer-events:none}
+  .search-results{display:none;position:absolute;left:0;right:0;top:calc(100% + 4px);background:var(--surface2);border:1px solid var(--border-med);border-radius:var(--r);z-index:100;max-height:280px;overflow-y:auto;box-shadow:0 8px 24px rgba(0,0,0,.4)}
+  .search-results.visible{display:block}
+  .sr-item{padding:10px 14px;cursor:pointer;border-bottom:1px solid var(--border);font-size:13px;color:var(--text-muted)}
+  .sr-item:last-child{border-bottom:none}
+  .sr-item:hover,.sr-item.active{background:var(--blue-dim);color:var(--blue-bright)}
+  .sr-item .sr-section{font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:.08em;color:var(--blue);margin-bottom:2px}
+  .sr-item .sr-text{font-size:12.5px}
+  .sr-empty{padding:12px 14px;font-size:12.5px;color:var(--text-faint);text-align:center}
+  mark{background:rgba(0,102,255,.25);color:var(--blue-bright);border-radius:2px;padding:0 2px}
+
+  .nav-label{font-family:var(--mono);font-size:9px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--text-faint);padding:14px 18px 6px}
+  .nav-item{display:flex;align-items:center;gap:8px;padding:8px 18px;font-size:13px;color:var(--text-muted);cursor:pointer;text-decoration:none;transition:all .12s;border-left:2px solid transparent}
+  .nav-item:hover{color:var(--text);background:var(--surface2)}
+  .nav-item.active{color:var(--blue-bright);border-left-color:var(--blue);background:var(--blue-dim);font-weight:500}
+  .nav-item.hidden{display:none}
+  .nav-num{font-family:var(--mono);font-size:10px;color:var(--text-faint);min-width:18px}
+  .nav-item.active .nav-num{color:var(--blue)}
+  .sidebar-foot{margin-top:auto;padding:14px 18px;border-top:1px solid var(--border);font-family:var(--mono);font-size:10px;color:var(--text-faint);line-height:1.8}
+  .sidebar-foot a{color:var(--blue-bright);text-decoration:none}
+
+  /* ── Main ── */
+  .main{padding:48px 64px 100px;max-width:1100px;width:100%}
+  .section{display:none}
+  .section.visible{display:block}
+
+  /* Section header */
+  .sh{margin-bottom:36px;padding-bottom:24px;border-bottom:1px solid var(--border)}
+  .sh .num{font-family:var(--mono);font-size:11px;color:var(--blue);letter-spacing:.1em;margin-bottom:10px}
+  .sh h2{font-size:32px;font-weight:600;letter-spacing:-.02em;color:var(--text);line-height:1.2}
+  .sh .desc{font-size:15px;color:var(--text-muted);margin-top:10px;max-width:680px;line-height:1.65}
+  .tags{display:flex;gap:6px;margin-top:14px;flex-wrap:wrap}
+  .tag{font-family:var(--mono);font-size:10px;padding:3px 9px;border-radius:2px;border:1px solid;letter-spacing:.03em}
+  .ta{color:var(--red);border-color:rgba(255,68,68,.3);background:var(--red-dim)}
+  .taa{color:var(--yellow);border-color:rgba(255,204,0,.3);background:var(--yellow-dim)}
+  .tnew{color:var(--cyan);border-color:rgba(0,200,255,.3);background:var(--cyan-dim)}
+  .tref{color:var(--text-faint);border-color:var(--border);background:transparent}
+
+  /* Blocks */
+  .block{background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);padding:24px 26px;margin-bottom:14px}
+  .block h3{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+  .block h3::after{content:"";flex:1;height:1px;background:var(--border)}
+
+  /* Code */
+  pre{font-family:var(--mono);font-size:13px;background:#0a0a0a;border:1px solid var(--border);border-left:3px solid var(--blue);border-radius:var(--r);padding:16px 18px;overflow-x:auto;margin:12px 0;line-height:1.8;color:#c8d0e0}
+  pre .c{color:#444} pre .k{color:#4d9bff} pre .s{color:#7ec8a0} pre .a{color:#c8a0d0} pre .v{color:#f0c060} pre .fn{color:#00c8ff}
+  code{font-family:var(--mono);font-size:12.5px;background:var(--surface3);border:1px solid var(--border);padding:2px 7px;border-radius:2px;color:var(--cyan)}
+
+  /* Tables */
+  table{width:100%;border-collapse:collapse;font-size:14px;margin:12px 0}
+  th{text-align:left;padding:10px 14px;background:var(--surface2);font-family:var(--mono);font-size:10px;font-weight:500;color:var(--text-faint);letter-spacing:.08em;text-transform:uppercase;border-bottom:1px solid var(--border-med)}
+  td{padding:11px 14px;border-bottom:1px solid var(--border);vertical-align:top;line-height:1.55;color:var(--text-muted)}
+  tr:last-child td{border-bottom:none}
+  td strong{color:var(--text);font-weight:500} td a{color:var(--blue-bright);text-decoration:none}
+
+  /* Do/dont */
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0}
+  .do,.dont{padding:14px 16px;border-radius:var(--r);font-size:13.5px;line-height:1.65}
+  .do{background:var(--green-dim);border:1px solid rgba(0,230,118,.2)}
+  .dont{background:var(--red-dim);border:1px solid rgba(255,68,68,.2)}
+  .dlabel{font-family:var(--mono);font-size:9px;font-weight:500;text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px;display:flex;align-items:center;gap:5px}
+  .dlabel::before{content:"●";font-size:7px}
+  .do .dlabel{color:var(--green)} .dont .dlabel{color:var(--red)}
+  .do code{background:rgba(0,230,118,.12);border-color:rgba(0,230,118,.2);color:var(--green)}
+  .dont code{background:rgba(255,68,68,.1);border-color:rgba(255,68,68,.2);color:var(--red)}
+
+  /* Callouts */
+  .note,.warn,.danger{border-radius:var(--r);padding:12px 16px;font-size:14px;margin:12px 0;line-height:1.65;display:flex;gap:10px;align-items:flex-start}
+  .note{background:var(--blue-dim);border:1px solid rgba(0,102,255,.25);color:var(--blue-bright)}
+  .warn{background:var(--yellow-dim);border:1px solid rgba(255,204,0,.25);color:var(--yellow)}
+  .danger{background:var(--red-dim);border:1px solid rgba(255,68,68,.25);color:#ff6666}
+  .ni{font-family:var(--mono);font-size:9px;font-weight:600;flex-shrink:0;margin-top:2px;padding:2px 5px;border-radius:2px}
+  .note .ni{background:rgba(0,102,255,.3);color:var(--blue-bright)}
+  .warn .ni{background:rgba(255,204,0,.3);color:var(--yellow)}
+  .danger .ni{background:rgba(255,68,68,.3);color:var(--red)}
+
+  /* Lists */
+  .rules{list-style:none}
+  .rules li{padding:9px 0;border-bottom:1px solid var(--border);font-size:14.5px;color:var(--text-muted);display:flex;gap:12px;align-items:flex-start;line-height:1.6}
+  .rules li:last-child{border-bottom:none}
+  .rules li::before{content:"→";font-family:var(--mono);font-size:12px;color:var(--blue);flex-shrink:0;margin-top:2px}
+  .checks{list-style:none}
+  .checks li{padding:9px 0;border-bottom:1px solid var(--border);font-size:14.5px;color:var(--text-muted);display:flex;gap:14px;align-items:flex-start;line-height:1.6}
+  .checks li:last-child{border-bottom:none}
+  .chk{width:15px;height:15px;border:1px solid var(--border-med);border-radius:2px;flex-shrink:0;margin-top:3px}
+
+  /* Keys */
+  .kbd{font-family:var(--mono);font-size:11px;background:var(--surface3);border:1px solid var(--border-med);border-bottom:2px solid var(--border-med);border-radius:3px;padding:2px 8px;color:var(--text);white-space:nowrap}
+
+  /* Sub-labels */
+  .sub{font-family:var(--mono);font-size:10px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--text-faint);margin:18px 0 8px}
+
+  /* Grid 2 */
+  .g2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0}
+  .scard{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);padding:16px}
+  .scard .slabel{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--text-faint);margin-bottom:6px}
+  .scard .sval{font-size:14px;color:var(--text);line-height:1.55}
+
+  /* Sources */
+  .src{font-family:var(--mono);font-size:11px;color:var(--text-faint);margin-top:22px;padding-top:14px;border-top:1px solid var(--border);line-height:1.9}
+  .src a{color:var(--blue-bright);text-decoration:none}
+
+  /* Search highlight in content */
+  .block.search-match{border-color:rgba(0,102,255,.4)}
+
+  /* Print */
+  @media print{.sidebar{display:none}.layout{grid-template-columns:1fr}.section{display:block!important}pre{white-space:pre-wrap}body{background:white;color:black}.main{padding:1rem}}
+
+  /* Mobile */
+  @media(max-width:860px){.layout{grid-template-columns:1fr}.sidebar{position:static;height:auto;flex-direction:row;flex-wrap:wrap;align-items:center;gap:4px;padding:10px;border-right:none;border-bottom:1px solid var(--border)}.brand,.nav-label,.sidebar-foot,.search-wrap{display:none}.nav-item{padding:6px 10px;font-size:12px;border:1px solid var(--border);border-left:1px solid var(--border);border-radius:3px}.nav-item.active{border-color:var(--blue)}.main{padding:24px 20px 48px}.split,.g2{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="layout">
+
+<nav class="sidebar">
+  <div class="brand">
+    <div class="brand-tag">Developer Reference</div>
+    <h1>A11Y Guide</h1>
+    <p>WCAG 2.2 AA · 2024</p>
+  </div>
+  <div class="search-wrap">
+    <div class="search-wrap-inner">
+      <span class="search-icon">⌕</span>
+      <input class="search-box" id="sideSearch" type="search" placeholder="Search sections..." autocomplete="off" spellcheck="false">
+      <div class="search-results" id="searchResults"></div>
+    </div>
+  </div>
+  <div class="nav-label">Sections</div>
+  <a class="nav-item active" href="#" onclick="show('forms',this)"><span class="nav-num">01</span>Forms &amp; labels</a>
+  <a class="nav-item" href="#" onclick="show('errors',this)"><span class="nav-num">02</span>Error handling</a>
+  <a class="nav-item" href="#" onclick="show('keyboard',this)"><span class="nav-num">03</span>Keyboard nav</a>
+  <a class="nav-item" href="#" onclick="show('tables',this)"><span class="nav-num">04</span>Tables</a>
+  <a class="nav-item" href="#" onclick="show('modals',this)"><span class="nav-num">05</span>Modals &amp; dialogs</a>
+  <a class="nav-item" href="#" onclick="show('focus',this)"><span class="nav-num">06</span>Focus management</a>
+  <a class="nav-item" href="#" onclick="show('aria',this)"><span class="nav-num">07</span>ARIA &amp; live regions</a>
+  <a class="nav-item" href="#" onclick="show('contrast',this)"><span class="nav-num">08</span>Color &amp; contrast</a>
+  <a class="nav-item" href="#" onclick="show('testing',this)"><span class="nav-num">09</span>Testing checklist</a>
+  <a class="nav-item" href="#" onclick="show('columns',this)"><span class="nav-num">10</span>Column navigation</a>
+  <a class="nav-item" href="#" onclick="show('dropdown',this)"><span class="nav-num">11</span>Dropdown with search</a>
+  <a class="nav-item" href="#" onclick="show('tabs2',this)"><span class="nav-num">12</span>Tabs — full spec</a>
+  <a class="nav-item" href="#" onclick="show('msgflow',this)"><span class="nav-num">13</span>Create message flow</a>
+  <a class="nav-item" href="#" onclick="show('checkbox',this)"><span class="nav-num">14</span>Checkbox — select all</a>
+  <div class="sidebar-foot">
+    <a href="https://www.w3.org/TR/WCAG22/" target="_blank">WCAG 2.2 spec ↗</a><br>
+    <a href="https://webaim.org/standards/wcag/checklist" target="_blank">WebAIM checklist ↗</a><br>
+    <a href="https://www.w3.org/WAI/ARIA/apg/" target="_blank">W3C ARIA APG ↗</a>
+  </div>
+</nav>
+
+<main class="main">
+
+<!-- 01 FORMS -->
+<div id="forms" class="section visible">
+  <div class="sh">
+    <div class="num">01 / FORMS &amp; LABELS</div>
+    <h2>Forms &amp; labels</h2>
+    <p class="desc">Every form control must have a persistent, programmatically associated label. Placeholder text is not a label.</p>
+    <div class="tags"><span class="tag ta">Level A</span><span class="tag taa">Level AA</span><span class="tag tref">WCAG 1.3.1 · 3.3.2 · 1.3.5</span></div>
+  </div>
+
+  <div class="block">
+    <h3>Label association</h3>
+    <div class="split">
+      <div class="do"><div class="dlabel">Correct</div><code>&lt;label for="email"&gt;Email&lt;/label&gt;<br>&lt;input id="email" type="email"&gt;</code></div>
+      <div class="dont"><div class="dlabel">Never</div><code>&lt;input type="email"<br>&nbsp;placeholder="Email"&gt;</code><p style="margin-top:6px;font-size:12px;color:var(--text-muted)">Disappears on input. Invisible to screen readers in error state.</p></div>
+    </div>
+  </div>
+
+  <div class="block">
+    <h3>Group related inputs</h3>
+    <pre><span class="k">&lt;fieldset&gt;</span>
+  <span class="k">&lt;legend&gt;</span>Shipping address<span class="k">&lt;/legend&gt;</span>
+  <span class="k">&lt;label</span> <span class="a">for</span>=<span class="s">"street"</span><span class="k">&gt;</span>Street<span class="k">&lt;/label&gt;</span>
+  <span class="k">&lt;input</span> <span class="a">id</span>=<span class="s">"street"</span> <span class="a">type</span>=<span class="s">"text"</span> <span class="a">autocomplete</span>=<span class="s">"street-address"</span><span class="k">&gt;</span>
+  <span class="k">&lt;label</span> <span class="a">for</span>=<span class="s">"city"</span><span class="k">&gt;</span>City<span class="k">&lt;/label&gt;</span>
+  <span class="k">&lt;input</span> <span class="a">id</span>=<span class="s">"city"</span> <span class="a">type</span>=<span class="s">"text"</span> <span class="a">autocomplete</span>=<span class="s">"address-level2"</span><span class="k">&gt;</span>
+<span class="k">&lt;/fieldset&gt;</span></pre>
+    <ul class="rules">
+      <li>Radio groups and checkbox groups must use <code>&lt;fieldset&gt;</code> + <code>&lt;legend&gt;</code></li>
+      <li>The legend is announced before each individual label inside the group</li>
+    </ul>
+  </div>
+
+  <div class="block">
+    <h3>Required fields</h3>
+    <ul class="rules">
+      <li>Add <code>aria-required="true"</code> on the input element</li>
+      <li>Show a visible indicator — asterisk (*) is standard. Explain once: <em>"* required"</em></li>
+      <li>Never rely on color alone to show required state</li>
+    </ul>
+  </div>
+
+  <div class="block">
+    <h3>Autocomplete attributes — WCAG 1.3.5</h3>
+    <div class="note"><span class="ni">INFO</span>Personal data fields must carry <code>autocomplete</code> attributes so password managers and browsers can assist users with cognitive and motor disabilities.</div>
+    <table>
+      <thead><tr><th>Field</th><th>Value</th></tr></thead>
+      <tbody>
+        <tr><td>Full name</td><td><code>autocomplete="name"</code></td></tr>
+        <tr><td>Email</td><td><code>autocomplete="email"</code></td></tr>
+        <tr><td>Phone</td><td><code>autocomplete="tel"</code></td></tr>
+        <tr><td>Street address</td><td><code>autocomplete="street-address"</code></td></tr>
+        <tr><td>Current password</td><td><code>autocomplete="current-password"</code></td></tr>
+        <tr><td>New password</td><td><code>autocomplete="new-password"</code></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="block">
+    <h3>Correct input types</h3>
+    <ul class="rules">
+      <li><code>type="email"</code> — mobile email keyboard + browser validation</li>
+      <li><code>type="tel"</code> — mobile number pad</li>
+      <li><code>type="url"</code> — URL keyboard layout</li>
+      <li><code>type="number"</code> — numeric-only values</li>
+      <li><code>type="search"</code> — adds clear button in some browsers</li>
+    </ul>
+  </div>
+
+  <div class="src">REF: <a href="https://www.w3.org/TR/WCAG22/" target="_blank">WCAG 2.2 spec</a> · <a href="https://webaim.org/standards/wcag/checklist" target="_blank">WebAIM checklist</a></div>
+</div>
+
+<!-- 02 ERRORS -->
+<div id="errors" class="section">
+  <div class="sh">
+    <div class="num">02 / ERROR HANDLING</div>
+    <h2>Error handling</h2>
+    <p class="desc">When something fails, users must be told what failed and how to fix it — in text, not color alone.</p>
+    <div class="tags"><span class="tag ta">Level A</span><span class="tag taa">Level AA</span><span class="tag tref">WCAG 3.3.1 · 3.3.2 · 3.3.3</span></div>
+  </div>
+
+  <div class="danger"><span class="ni">ERR</span>Never use color or border alone to indicate an error. Screen readers cannot perceive visual styling. Always pair visual cues with descriptive text.</div>
+
+  <div class="block">
+    <h3>Required markup pattern</h3>
+    <pre><span class="k">&lt;label</span> <span class="a">for</span>=<span class="s">"email"</span><span class="k">&gt;</span>Email address<span class="k">&lt;/label&gt;</span>
+<span class="k">&lt;input</span>
+  <span class="a">id</span>=<span class="s">"email"</span>
+  <span class="a">type</span>=<span class="s">"email"</span>
+  <span class="a">aria-required</span>=<span class="s">"true"</span>
+  <span class="a">aria-invalid</span>=<span class="s">"true"</span>           <span class="c">← set when validation fails</span>
+  <span class="a">aria-describedby</span>=<span class="s">"email-err"</span>  <span class="c">← links to error message</span>
+<span class="k">&gt;</span>
+<span class="k">&lt;span</span> <span class="a">id</span>=<span class="s">"email-err"</span> <span class="a">role</span>=<span class="s">"alert"</span><span class="k">&gt;</span>Enter a valid email address<span class="k">&lt;/span&gt;</span></pre>
+    <div class="sub">Attribute reference</div>
+    <table>
+      <thead><tr><th>Attribute</th><th>Purpose</th></tr></thead>
+      <tbody>
+        <tr><td><code>aria-invalid="true"</code></td><td>Signals error state to screen readers</td></tr>
+        <tr><td><code>aria-describedby="id"</code></td><td>Points to error message — read after the field label</td></tr>
+        <tr><td><code>role="alert"</code></td><td>Announces error immediately without focus moving</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="block">
+    <h3>Error message rules</h3>
+    <ul class="rules">
+      <li>Be specific — not <em>"invalid input"</em> but <em>"Password must be at least 8 characters"</em></li>
+      <li>Place the message directly below the field that failed</li>
+      <li>On submit: move focus to the first failing field</li>
+      <li>Show an error summary at top of form with anchor links to each failed field</li>
+      <li>Never clear the user's entered value on error</li>
+      <li>Reset: <code>aria-invalid="false"</code> and remove error text once field passes</li>
+      <li>Provide format hints upfront where possible: <em>"Use MM/DD/YYYY"</em></li>
+    </ul>
+  </div>
+
+  <div class="block">
+    <h3>Validation timing</h3>
+    <table>
+      <thead><tr><th>Timing</th><th>Use when</th><th>Caveat</th></tr></thead>
+      <tbody>
+        <tr><td>Real-time</td><td>Password strength, username availability</td><td>Don't penalize before user finishes typing</td></tr>
+        <tr><td>On blur</td><td>Email format, date format</td><td>Best for formatted inputs</td></tr>
+        <tr><td>On submit</td><td>Full review</td><td>Always run this even if real-time is active</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="block">
+    <h3>Error summary — multi-field forms</h3>
+    <pre><span class="k">&lt;div</span> <span class="a">role</span>=<span class="s">"alert"</span> <span class="a">aria-labelledby</span>=<span class="s">"err-head"</span><span class="k">&gt;</span>
+  <span class="k">&lt;h2</span> <span class="a">id</span>=<span class="s">"err-head"</span><span class="k">&gt;</span>2 errors in this form<span class="k">&lt;/h2&gt;</span>
+  <span class="k">&lt;ul&gt;</span>
+    <span class="k">&lt;li&gt;&lt;a</span> <span class="a">href</span>=<span class="s">"#email"</span><span class="k">&gt;</span>Email: enter a valid address<span class="k">&lt;/a&gt;&lt;/li&gt;</span>
+    <span class="k">&lt;li&gt;&lt;a</span> <span class="a">href</span>=<span class="s">"#dob"</span><span class="k">&gt;</span>Date of birth: use MM/DD/YYYY<span class="k">&lt;/a&gt;&lt;/li&gt;</span>
+  <span class="k">&lt;/ul&gt;</span>
+<span class="k">&lt;/div&gt;</span></pre>
+  </div>
+
+  <div class="src">REF: <a href="https://www.reform.app/blog/accessible-form-validation-best-practices" target="_blank">Accessible Form Validation</a> · <a href="https://accessdrum.com/en/tips-tricks-thursday-05-accessible-forms-input-fields-and-error-messages/" target="_blank">Access Drum: Forms &amp; Errors</a></div>
+</div>
+
+<!-- 03 KEYBOARD -->
+<div id="keyboard" class="section">
+  <div class="sh">
+    <div class="num">03 / KEYBOARD</div>
+    <h2>Keyboard navigation</h2>
+    <p class="desc">Every task must be completable without a mouse. Unplug yours and try every flow.</p>
+    <div class="tags"><span class="tag ta">Level A</span><span class="tag tref">WCAG 2.1.1 · 2.1.2 · 2.4.3 · 2.4.7</span></div>
+  </div>
+
+  <div class="block">
+    <h3>Universal keys</h3>
+    <table>
+      <thead><tr><th>Key</th><th>Action</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td><span class="kbd">Tab</span></td><td>Next interactive element</td><td>Buttons, inputs, links, widgets</td></tr>
+        <tr><td><span class="kbd">Shift + Tab</span></td><td>Previous element</td><td>Reverse direction</td></tr>
+        <tr><td><span class="kbd">Enter</span></td><td>Activate</td><td>Submit, follow link, open dropdown</td></tr>
+        <tr><td><span class="kbd">Space</span></td><td>Toggle / scroll</td><td>Checkbox, radio, button — NOT links</td></tr>
+        <tr><td><span class="kbd">Arrow keys</span></td><td>Navigate inside widget</td><td>Dropdown, radio group, tabs, slider</td></tr>
+        <tr><td><span class="kbd">Escape</span></td><td>Close / cancel</td><td>Modal, dropdown, tooltip — return focus to trigger</td></tr>
+        <tr><td><span class="kbd">Home / End</span></td><td>First / last item</td><td>Lists, tab lists, grids</td></tr>
+      </tbody>
+    </table>
+    <div class="warn"><span class="ni">WARN</span><span><strong style="color:var(--text)">Enter vs Space:</strong> Buttons activate with either. Links activate with Enter only — Space scrolls the page. Use <code>&lt;button&gt;</code> for actions, <code>&lt;a&gt;</code> for navigation.</span></div>
+  </div>
+
+  <div class="block">
+    <h3>Custom widget rules</h3>
+    <ul class="rules">
+      <li>Custom interactive elements need <code>tabindex="0"</code> to be keyboard-reachable</li>
+      <li>Grouped widgets (tabs, radio group) = <strong style="color:var(--text)">one Tab stop</strong>. Arrow keys navigate inside. This is the roving tabindex pattern.</li>
+      <li>Never use <code>tabindex</code> above 0 — breaks natural tab order</li>
+      <li>Tab order must match visual reading order — never reorder via CSS only</li>
+      <li>Never write <code>outline: none</code> without a custom focus replacement</li>
+    </ul>
+  </div>
+
+  <div class="block">
+    <h3>Roving tabindex pattern</h3>
+    <pre><span class="c">// Active: tabindex="0"  |  Others: tabindex="-1"</span>
+tabBtn.<span class="fn">addEventListener</span>(<span class="s">'keydown'</span>, (e) => {
+  <span class="k">if</span> (e.key === <span class="s">'ArrowRight'</span>) {
+    current.tabIndex = <span class="v">-1</span>;
+    next.tabIndex = <span class="v">0</span>;
+    next.<span class="fn">focus</span>();
+  }
+});</pre>
+  </div>
+
+  <div class="block">
+    <h3>Skip link — required on every page</h3>
+    <pre><span class="c">&lt;!-- First element in &lt;body&gt; --&gt;</span>
+<span class="k">&lt;a</span> <span class="a">href</span>=<span class="s">"#main"</span> <span class="a">class</span>=<span class="s">"skip-link"</span><span class="k">&gt;</span>Skip to main content<span class="k">&lt;/a&gt;</span>
+<span class="k">&lt;main</span> <span class="a">id</span>=<span class="s">"main"</span><span class="k">&gt;</span>...<span class="k">&lt;/main&gt;</span>
+
+.skip-link { position: absolute; transform: translateY(-100%); }
+.skip-link:focus { transform: translateY(0); }</pre>
+  </div>
+
+  <div class="src">REF: <a href="https://webaim.org/standards/wcag/checklist" target="_blank">WebAIM checklist</a> · <a href="https://www.w3.org/WAI/ARIA/apg/" target="_blank">W3C ARIA APG</a></div>
+</div>
+
+<!-- 04 TABLES -->
+<div id="tables" class="section">
+  <div class="sh">
+    <div class="num">04 / TABLES</div>
+    <h2>Tables</h2>
+    <p class="desc">Tables are for data, never layout. Screen readers navigate cell-by-cell using header context.</p>
+    <div class="tags"><span class="tag ta">Level A</span><span class="tag tref">WCAG 1.3.1</span></div>
+  </div>
+
+  <div class="block">
+    <h3>Minimum required markup</h3>
+    <pre><span class="k">&lt;table&gt;</span>
+  <span class="k">&lt;caption&gt;</span>Q1 2025 sales by region<span class="k">&lt;/caption&gt;</span>  <span class="c">← always required</span>
+  <span class="k">&lt;thead&gt;</span>
+    <span class="k">&lt;tr&gt;</span>
+      <span class="k">&lt;th</span> <span class="a">scope</span>=<span class="s">"col"</span><span class="k">&gt;</span>Region<span class="k">&lt;/th&gt;</span>
+      <span class="k">&lt;th</span> <span class="a">scope</span>=<span class="s">"col"</span><span class="k">&gt;</span>January<span class="k">&lt;/th&gt;</span>
+    <span class="k">&lt;/tr&gt;</span>
+  <span class="k">&lt;/thead&gt;</span>
+  <span class="k">&lt;tbody&gt;</span>
+    <span class="k">&lt;tr&gt;</span>
+      <span class="k">&lt;th</span> <span class="a">scope</span>=<span class="s">"row"</span><span class="k">&gt;</span>North<span class="k">&lt;/th&gt;</span>  <span class="c">← row header</span>
+      <span class="k">&lt;td&gt;</span>$14,200<span class="k">&lt;/td&gt;</span>
+    <span class="k">&lt;/tr&gt;</span>
+  <span class="k">&lt;/tbody&gt;</span>
+<span class="k">&lt;/table&gt;</span></pre>
+  </div>
+
+  <div class="block">
+    <h3>Element reference</h3>
+    <table>
+      <thead><tr><th>Element / attr</th><th>Purpose</th><th>Required?</th></tr></thead>
+      <tbody>
+        <tr><td><code>&lt;caption&gt;</code></td><td>Describes the table — read first by screen readers</td><td><strong>Always</strong></td></tr>
+        <tr><td><code>scope="col"</code></td><td>Declares a column header</td><td><strong>Always</strong></td></tr>
+        <tr><td><code>scope="row"</code></td><td>Declares a row header</td><td>Row-labelled data</td></tr>
+        <tr><td><code>&lt;thead&gt;&lt;tbody&gt;&lt;tfoot&gt;</code></td><td>Structural grouping</td><td><strong>Always</strong></td></tr>
+        <tr><td><code>headers</code> attr</td><td>Links cells to multiple headers in merged tables</td><td>Complex tables</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="block">
+    <h3>Interactive and selectable tables</h3>
+    <ul class="rules">
+      <li>Selectable rows: <code>aria-selected="true/false"</code> on each <code>&lt;tr&gt;</code></li>
+      <li>Select all checkbox: <code>aria-label="Select all rows"</code></li>
+      <li>Per-row checkboxes: <code>aria-label="Select [row name]"</code> — unique per row</li>
+      <li>Sortable columns: <code>aria-sort="ascending"</code> / <code>"descending"</code> / <code>"none"</code> on the <code>&lt;th&gt;</code></li>
+      <li>Announce sort via aria-live: <em>"Sorted by date, ascending"</em></li>
+    </ul>
+    <div class="sub">Keyboard inside a data grid</div>
+    <table>
+      <thead><tr><th>Key</th><th>Action</th></tr></thead>
+      <tbody>
+        <tr><td><span class="kbd">Tab</span></td><td>Move between interactive cells / buttons</td></tr>
+        <tr><td><span class="kbd">↑ ↓</span></td><td>Navigate rows</td></tr>
+        <tr><td><span class="kbd">← →</span></td><td>Navigate columns</td></tr>
+        <tr><td><span class="kbd">Space</span></td><td>Toggle row selection / checkbox</td></tr>
+      </tbody>
+    </table>
+    <div class="note" style="margin-top:10px"><span class="ni">INFO</span>Wrap tables in <code>&lt;div style="overflow-x:auto"&gt;</code>. The div scrolls, not the page. At 200% zoom, no horizontal scroll should appear.</div>
+  </div>
+
+  <div class="src">REF: <a href="https://www.w3.org/TR/WCAG22/#info-and-relationships" target="_blank">WCAG 2.2 — 1.3.1</a> · <a href="https://webaim.org/standards/wcag/checklist" target="_blank">WebAIM</a></div>
+</div>
+
+<!-- 05 MODALS -->
+<div id="modals" class="section">
+  <div class="sh">
+    <div class="num">05 / MODALS</div>
+    <h2>Modals &amp; dialogs</h2>
+    <p class="desc">Modals must trap focus, respond to Escape, and return focus precisely. One of the most commonly broken patterns.</p>
+    <div class="tags"><span class="tag ta">Level A</span><span class="tag tref">WCAG 2.1.1 · 2.1.2 · 4.1.2</span></div>
+  </div>
+
+  <div class="block">
+    <h3>Required keyboard behaviour</h3>
+    <ul class="rules">
+      <li>On open: move focus to modal heading or first focusable element inside</li>
+      <li>Tab must cycle only within the modal — cannot escape to page behind it (focus trap)</li>
+      <li>Escape closes and returns focus to exactly the element that triggered it</li>
+    </ul>
+  </div>
+
+  <div class="block">
+    <h3>Required ARIA markup</h3>
+    <pre><span class="k">&lt;div</span>
+  <span class="a">role</span>=<span class="s">"dialog"</span>
+  <span class="a">aria-modal</span>=<span class="s">"true"</span>           <span class="c">← marks background as inert for screen readers</span>
+  <span class="a">aria-labelledby</span>=<span class="s">"modal-title"</span>
+<span class="k">&gt;</span>
+  <span class="k">&lt;h2</span> <span class="a">id</span>=<span class="s">"modal-title"</span> <span class="a">tabindex</span>=<span class="s">"-1"</span><span class="k">&gt;</span>Confirm deletion<span class="k">&lt;/h2&gt;</span>
+  <span class="k">&lt;p&gt;</span>This action cannot be undone.<span class="k">&lt;/p&gt;</span>
+  <span class="k">&lt;button&gt;</span>Cancel<span class="k">&lt;/button&gt;</span>
+  <span class="k">&lt;button&gt;</span>Delete<span class="k">&lt;/button&gt;</span>
+<span class="k">&lt;/div&gt;</span></pre>
+    <div class="note"><span class="ni">INFO</span>Pair <code>aria-modal="true"</code> with the <code>inert</code> attribute on the page background for full browser support.</div>
+  </div>
+
+  <div class="block">
+    <h3>Focus management pattern</h3>
+    <pre><span class="k">let</span> trigger; <span class="c">// always store ref before opening</span>
+
+<span class="k">function</span> <span class="fn">openModal</span>(el) {
+  trigger = el;
+  modal.removeAttribute(<span class="s">'hidden'</span>);
+  modalHeading.<span class="fn">focus</span>();
+}
+
+<span class="k">function</span> <span class="fn">closeModal</span>() {
+  modal.setAttribute(<span class="s">'hidden'</span>, <span class="s">''</span>);
+  trigger.<span class="fn">focus</span>(); <span class="c">// always return to exact trigger</span>
+}</pre>
+    <div class="danger"><span class="ni">ERR</span>Never use <code>role="dialog"</code> on side panels that don't trap focus. Use <code>role="region"</code> with <code>aria-label</code> instead.</div>
+  </div>
+
+  <div class="src">REF: <a href="https://www.a11y-collective.com/blog/modal-accessibility/" target="_blank">A11Y Collective: Modal Accessibility</a> · <a href="https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/" target="_blank">W3C APG Dialog Pattern</a></div>
+</div>
+
+<!-- 06 FOCUS -->
+<div id="focus" class="section">
+  <div class="sh">
+    <div class="num">06 / FOCUS MANAGEMENT</div>
+    <h2>Focus management</h2>
+    <p class="desc">Where focus lands after interactions is as important as what receives it. WCAG 2.2 added new rules here.</p>
+    <div class="tags"><span class="tag taa">Level AA</span><span class="tag tnew">New in WCAG 2.2</span><span class="tag tref">WCAG 2.4.11 · 2.4.3 · 2.4.7</span></div>
+  </div>
+
+  <div class="block">
+    <h3>The three rules</h3>
+    <div class="g2">
+      <div class="scard"><div class="slabel">When something opens</div><div class="sval">Move focus to it — heading, first input, or named container</div></div>
+      <div class="scard"><div class="slabel">When something closes</div><div class="sval">Return focus to the exact element that triggered it — stored by ref</div></div>
+    </div>
+    <div class="scard" style="margin-top:10px"><div class="slabel">Never move focus uninvited</div><div class="sval">Only move focus as a direct response to a user action. Never on toast, loading state, or background updates.</div></div>
+  </div>
+
+  <div class="block">
+    <h3>Focus routing reference</h3>
+    <table>
+      <thead><tr><th>Event</th><th>Move focus to</th></tr></thead>
+      <tbody>
+        <tr><td>Modal opens</td><td>Modal heading (<code>tabindex="-1"</code>)</td></tr>
+        <tr><td>Modal closes</td><td>Exact trigger element</td></tr>
+        <tr><td>Side panel opens</td><td>Panel heading (<code>tabindex="-1"</code>)</td></tr>
+        <tr><td>SPA route change</td><td>Page <code>&lt;h1&gt;</code> or hidden focus target</td></tr>
+        <tr><td>Form error</td><td>First error message or failed field</td></tr>
+        <tr><td>Toast appears</td><td><strong style="color:var(--red)">Do NOT move focus</strong> — announce via aria-live only</td></tr>
+        <tr><td>Tab activates</td><td>Do NOT move into panel — user decides with Tab</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="block">
+    <h3>WCAG 2.2 — focus must not be obscured (2.4.11)</h3>
+    <div class="warn"><span class="ni">WARN</span><span>Focused elements must not be hidden behind sticky headers, banners, or chat widgets. Fix with <code>scroll-padding-top</code>.</span></div>
+    <pre>html {
+  scroll-padding-top: 80px; <span class="c">/* height of your sticky header */</span>
+}
+
+:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}</pre>
+  </div>
+
+  <div class="src">REF: <a href="https://www.accessibility.build/blog/complete-guide-wcag-2-2-compliance-developers-2024" target="_blank">Complete WCAG 2.2 Guide</a> · <a href="https://www.allyscan.com/en/blog/wcag-22-complete-guide" target="_blank">AllyScan WCAG 2.2</a></div>
+</div>
+
+<!-- 07 ARIA -->
+<div id="aria" class="section">
+  <div class="sh">
+    <div class="num">07 / ARIA</div>
+    <h2>ARIA &amp; live regions</h2>
+    <p class="desc">ARIA supplements native HTML — it should be your last resort, not your first move.</p>
+    <div class="tags"><span class="tag ta">Level A</span><span class="tag taa">Level AA</span><span class="tag tref">WCAG 4.1.2 · 4.1.3</span></div>
+  </div>
+
+  <div class="danger"><span class="ni">ERR</span><strong style="color:var(--text)">First rule of ARIA:</strong> don't use it if native HTML does the job. <code>&lt;button&gt;</code> always beats <code>&lt;div role="button"&gt;</code>. Native elements come with keyboard handling and screen reader support for free.</div>
+
+  <div class="block">
+    <h3>Common attributes</h3>
+    <table>
+      <thead><tr><th>Attribute</th><th>What it does</th><th>Use case</th></tr></thead>
+      <tbody>
+        <tr><td><code>aria-label</code></td><td>Names element — no visible text needed</td><td>Icon-only buttons</td></tr>
+        <tr><td><code>aria-labelledby</code></td><td>Points to element that names this one</td><td>Modals, regions</td></tr>
+        <tr><td><code>aria-describedby</code></td><td>Additional description (read after label)</td><td>Error messages, hints</td></tr>
+        <tr><td><code>aria-expanded</code></td><td>Open/closed state</td><td>Dropdowns, accordions</td></tr>
+        <tr><td><code>aria-selected</code></td><td>Selection state</td><td>Tabs, listbox</td></tr>
+        <tr><td><code>aria-pressed</code></td><td>Toggle state</td><td>Bold/italic, filters</td></tr>
+        <tr><td><code>aria-hidden="true"</code></td><td>Hides from screen readers entirely</td><td>Decorative icons, charts</td></tr>
+        <tr><td><code>aria-live</code></td><td>Announces dynamic changes without moving focus</td><td>Status, counts, toasts</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="block">
+    <h3>Live region pattern</h3>
+    <div class="warn"><span class="ni">WARN</span>Never announce by injecting a new element. Update text inside a <strong style="color:var(--text)">pre-existing</strong> live region that lives in the DOM from page load.</div>
+    <pre><span class="c">&lt;!-- In DOM from page load — empty until needed --&gt;</span>
+<span class="k">&lt;div</span> <span class="a">id</span>=<span class="s">"sr-announce"</span>
+     <span class="a">role</span>=<span class="s">"status"</span>
+     <span class="a">aria-live</span>=<span class="s">"polite"</span>
+     <span class="a">aria-atomic</span>=<span class="s">"true"</span>
+     <span class="a">class</span>=<span class="s">"sr-only"</span><span class="k">&gt;&lt;/div&gt;</span></pre>
+    <pre><span class="k">function</span> <span class="fn">announce</span>(msg) {
+  <span class="k">const</span> el = document.<span class="fn">getElementById</span>(<span class="s">'sr-announce'</span>);
+  el.textContent = <span class="s">''</span>; <span class="c">// clear first — forces re-read of same text</span>
+  <span class="fn">setTimeout</span>(() => { el.textContent = msg; }, <span class="v">50</span>);
+}</pre>
+  </div>
+
+  <div class="block">
+    <h3>Live region types</h3>
+    <table>
+      <thead><tr><th>Type</th><th>Use when</th></tr></thead>
+      <tbody>
+        <tr><td><code>aria-live="polite"</code></td><td>Updates, messages, counts — 95% of cases. Waits for user to finish.</td></tr>
+        <tr><td><code>role="alert"</code></td><td>Session expiry, connection lost, critical errors. Interrupts immediately.</td></tr>
+        <tr><td><code>role="status"</code></td><td>Progress, "saved", connection state</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="block">
+    <h3>sr-only utility class</h3>
+    <pre>.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border: 0;
+}</pre>
+  </div>
+
+  <div class="src">REF: <a href="https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA" target="_blank">MDN ARIA docs</a> · <a href="https://www.w3.org/WAI/ARIA/apg/" target="_blank">W3C ARIA APG</a></div>
+</div>
+
+<!-- 08 CONTRAST -->
+<div id="contrast" class="section">
+  <div class="sh">
+    <div class="num">08 / COLOR &amp; CONTRAST</div>
+    <h2>Color &amp; contrast</h2>
+    <p class="desc">Color must never be the only way information is conveyed. Contrast ratios are non-negotiable.</p>
+    <div class="tags"><span class="tag taa">Level AA</span><span class="tag tref">WCAG 1.4.1 · 1.4.3 · 1.4.11</span></div>
+  </div>
+
+  <div class="block">
+    <h3>Required contrast ratios</h3>
+    <table>
+      <thead><tr><th>Content type</th><th>Minimum</th></tr></thead>
+      <tbody>
+        <tr><td>Normal text (below 18pt / 14pt bold)</td><td><strong>4.5 : 1</strong></td></tr>
+        <tr><td>Large text (18pt+ or 14pt bold+)</td><td><strong>3 : 1</strong></td></tr>
+        <tr><td>UI components — input borders, focus rings</td><td><strong>3 : 1</strong></td></tr>
+        <tr><td>Meaningful icons</td><td><strong>3 : 1</strong></td></tr>
+        <tr><td>Focus indicators</td><td><strong>3 : 1</strong> against adjacent colors</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="block">
+    <h3>Color-only violations and fixes</h3>
+    <div class="danger" style="margin-bottom:10px"><span class="ni">ERR</span>Applies to: error states, status badges, chart series, required fields, active/inactive states, link text in body copy.</div>
+    <table>
+      <thead><tr><th>Violation</th><th>Fix</th></tr></thead>
+      <tbody>
+        <tr><td>Error — red border only</td><td>Red border + error icon + text message</td></tr>
+        <tr><td>Chart series — color only</td><td>Different dashes + different marker shapes</td></tr>
+        <tr><td>Required field — asterisk only</td><td>Asterisk + <em>"* required"</em> legend</td></tr>
+        <tr><td>Active nav — color only</td><td>Color + bold + underline or border accent</td></tr>
+        <tr><td>Status badge — color only</td><td>Color + text label: <em>"Active"</em>, <em>"Error"</em></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="block">
+    <h3>Tooling</h3>
+    <ul class="rules">
+      <li><strong style="color:var(--text)">Colour Contrast Analyser</strong> — free desktop app, checks rendered UI (not design files)</li>
+      <li><strong style="color:var(--text)">Chrome DevTools</strong> — hover any element in inspector to see contrast ratio</li>
+      <li><strong style="color:var(--text)">axe DevTools</strong> — browser extension, catches failures in CI</li>
+      <li><strong style="color:var(--text)">WAVE</strong> — visual overlay, good for explaining failures to stakeholders</li>
+    </ul>
+    <div class="note"><span class="ni">INFO</span>Always verify in the rendered browser. Browser rendering can differ from design tool values.</div>
+  </div>
+</div>
+
+<!-- 09 TESTING -->
+<div id="testing" class="section">
+  <div class="sh">
+    <div class="num">09 / TESTING</div>
+    <h2>Testing checklist</h2>
+    <p class="desc">Automated tools catch ~30–40% of issues. Manual testing is always required for the rest.</p>
+  </div>
+
+  <div class="block">
+    <h3>Manual protocol — run before every release</h3>
+    <ul class="checks">
+      <li><span class="chk"></span>Unplug mouse — complete every primary task using keyboard only</li>
+      <li><span class="chk"></span>Enable VoiceOver (Mac) or NVDA (Windows) — complete primary tasks</li>
+      <li><span class="chk"></span>Zoom to 200% — check for horizontal scroll and overlapping content</li>
+      <li><span class="chk"></span>Tab through all forms — verify every field has an announced label</li>
+      <li><span class="chk"></span>Submit forms with empty/invalid inputs — verify errors are announced</li>
+      <li><span class="chk"></span>Open and close every modal — check focus trap and focus return</li>
+      <li><span class="chk"></span>Audit all icon-only buttons — confirm accessible names (not just "button")</li>
+      <li><span class="chk"></span>Enable high contrast mode — check all states are distinguishable</li>
+      <li><span class="chk"></span>Disable CSS — verify logical reading order matches visual order</li>
+    </ul>
+  </div>
+
+  <div class="block">
+    <h3>Automated tools</h3>
+    <table>
+      <thead><tr><th>Tool</th><th>What it catches</th><th>Where</th></tr></thead>
+      <tbody>
+        <tr><td><a href="https://www.deque.com/axe/" target="_blank">axe DevTools</a></td><td>Labels, contrast, ARIA issues</td><td>Browser ext + CI</td></tr>
+        <tr><td><a href="https://developer.chrome.com/docs/lighthouse/" target="_blank">Lighthouse</a></td><td>Score, contrast, labels</td><td>Chrome DevTools</td></tr>
+        <tr><td><a href="https://wave.webaim.org/" target="_blank">WAVE</a></td><td>Visual overlay, structure</td><td>Browser ext / web</td></tr>
+      </tbody>
+    </table>
+    <div class="warn" style="margin-top:10px"><span class="ni">WARN</span>Automated tools cannot detect: missing focus management, incorrect keyboard patterns, poor accessible names that are technically present, or reading order failures.</div>
+  </div>
+
+  <div class="block">
+    <h3>Screen reader matrix</h3>
+    <table>
+      <thead><tr><th>Tool</th><th>Platform</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td>NVDA (free)</td><td>Windows</td><td>Most common — use with Chrome/Firefox</td></tr>
+        <tr><td>VoiceOver</td><td>macOS + iOS</td><td>Built in — Cmd+F5 to toggle</td></tr>
+        <tr><td>JAWS (paid)</td><td>Windows</td><td>Enterprise / government standard</td></tr>
+        <tr><td>TalkBack</td><td>Android</td><td>Built in — for mobile testing</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="block">
+    <h3>7 rules that catch 80% of failures</h3>
+    <ul class="rules">
+      <li>Every interactive element has a keyboard interaction and a visible focus state</li>
+      <li>Every image, icon, and chart has a text alternative</li>
+      <li>No information is conveyed by color alone</li>
+      <li>All text meets contrast minimums — 4.5:1 normal, 3:1 large</li>
+      <li>Layout reflows at 200% zoom with no horizontal scroll</li>
+      <li>Dynamic changes are announced via <code>aria-live</code> without moving focus</li>
+      <li>Focus always returns to the triggering element when an overlay closes</li>
+    </ul>
+  </div>
+
+  <div class="src">REF: <a href="https://www.w3.org/TR/WCAG22/" target="_blank">WCAG 2.2 spec</a> · <a href="https://webaim.org/standards/wcag/checklist" target="_blank">WebAIM</a> · <a href="https://www.w3.org/WAI/ARIA/apg/" target="_blank">W3C APG</a> · <a href="https://www.wcag.com/developers/" target="_blank">wcag.com</a></div>
+</div>
+
+
+<!-- 10 COLUMN NAVIGATION -->
+<div id="columns" class="section">
+  <div class="sh">
+    <div class="num">10 / COLUMN NAVIGATION</div>
+    <h2>Column navigation</h2>
+    <p class="desc">Multi-column layouts need two independent entry points: landmark jumping (R key in screen readers) and Tab-based header navigation. Both must work independently.</p>
+    <div class="tags"><span class="tag ta">Level A</span><span class="tag tref">WCAG 2.1.1 · 1.3.1 · 2.4.3</span></div>
+  </div>
+
+  <div class="block">
+    <h3>Moving between columns</h3>
+    <table>
+      <thead><tr><th>Key</th><th>What happens</th><th>Screen reader says</th></tr></thead>
+      <tbody>
+        <tr><td><span class="kbd">R</span> (NVDA/JAWS)</td><td>Jumps to next <code>role="region"</code> landmark — column to column without Tab</td><td><em>"FB Post feed, region. 55,900 items."</em></td></tr>
+        <tr><td><span class="kbd">Tab</span></td><td>Moves through column headers in DOM order</td><td><em>"FB Post, column header, 1 of 3"</em></td></tr>
+        <tr><td><span class="kbd">Ctrl + →</span></td><td>From anywhere in Column 1 — jumps to Column 2 header. Wraps from last to first.</td><td><em>"FB DM, column header, 2 of 3"</em></td></tr>
+        <tr><td><span class="kbd">Ctrl + ←</span></td><td>Moves to previous column header. Wraps from first to last.</td><td><em>"FB Post, column header, 1 of 3"</em></td></tr>
+        <tr><td><span class="kbd">Tab</span> (on header)</td><td>Enters the column — focus moves to first card inside</td><td><em>"Patrick Olsen, Facebook DM, 21 hours ago, 1 of 55,900."</em></td></tr>
+        <tr><td><span class="kbd">Escape</span> (inside column)</td><td>Exits column — returns focus to the column header</td><td><em>"FB Post, column header, 1 of 3"</em></td></tr>
+        <tr><td><span class="kbd">Shift + Tab</span> (first card)</td><td>Returns to column header — same as Escape</td><td><em>"FB Post, column header, 1 of 3"</em></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="block">
+    <h3>Column header — the anchor point</h3>
+    <p style="font-size:13px;color:var(--text-muted);margin-bottom:10px">The column header is the most important focusable element in the layout. It must announce everything a user needs before entering the column.</p>
+    <div class="note"><span class="ni">INFO</span><em>"FB Post, column 1 of 3, 55,900 items. Press Tab to enter, Enter to open column menu."</em></div>
+    <ul class="rules">
+      <li>Column header is an <code>&lt;h2&gt;</code> with <code>tabindex="0"</code> — it is the landmark heading AND a focusable element</li>
+      <li><code>role="region"</code> <code>aria-labelledby</code> points to this heading — both landmark navigation (R key) and Tab land on the same element</li>
+      <li>Include column position: <code>aria-label="FB Post, column 1 of 3, 55,900 items"</code> — without position, users can't tell which column they're in after reordering</li>
+      <li><strong style="color:var(--red)">After reordering:</strong> every column header's <code>aria-label</code> must update to reflect the new position — this is the most commonly missed step in reorder implementations</li>
+    </ul>
+  </div>
+
+  <div class="block">
+    <h3>Navigating within a column</h3>
+    <table>
+      <thead><tr><th>Key</th><th>What happens</th><th>Screen reader says</th></tr></thead>
+      <tbody>
+        <tr><td><span class="kbd">Tab</span> (from header)</td><td>Enters column — focus on first card</td><td><em>"Patrick Olsen, Facebook DM, 21 hours ago. 1 of 55,900."</em></td></tr>
+        <tr><td><span class="kbd">↓</span></td><td>Next card</td><td><em>"Bacsó Attila, Facebook DM, 1 day ago. 2 of 55,900."</em></td></tr>
+        <tr><td><span class="kbd">↑</span> (from first card)</td><td>Returns to column header</td><td><em>"FB Post, column header, 1 of 3"</em></td></tr>
+        <tr><td><span class="kbd">Enter</span> (on card)</td><td>Opens card detail — focus moves to detail panel heading</td><td><em>"Conversation with Patrick Olsen, heading"</em></td></tr>
+        <tr><td><span class="kbd">Escape</span> (in detail)</td><td>Closes detail — focus returns to exact card that opened it</td><td><em>"Patrick Olsen, Facebook DM, 21 hours ago. 1 of 55,900."</em></td></tr>
+        <tr><td><span class="kbd">Ctrl + →</span></td><td>Jumps to next column header — exits this column entirely</td><td><em>"FB DM, column header, 2 of 3"</em></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="block">
+    <h3>Column reorder — keyboard drag spec</h3>
+    <div class="sub">Layer 1 — column header menu (··· button)</div>
+    <ul class="rules">
+      <li>The ··· button opens a menu. "Move left" and "Move right" are menu items — minimum required for compliance</li>
+      <li>Announce: <em>"More options for FB Post column, button, collapsed"</em> → <em>"Move right, menu item, 2 of 4"</em></li>
+    </ul>
+    <div class="sub">Layer 2 — keyboard drag (Space + Arrow)</div>
+    <table>
+      <thead><tr><th>Step</th><th>Key</th><th>Screen reader says</th></tr></thead>
+      <tbody>
+        <tr><td>Grab</td><td><span class="kbd">Space</span> on column header</td><td><em>"FB Post grabbed. Left Right arrows to move. Space to drop, Escape to cancel."</em></td></tr>
+        <tr><td>Move</td><td><span class="kbd">→</span></td><td><em>"FB Post moved to position 2 of 3. Now between FB DM and TW Post."</em></td></tr>
+        <tr><td>Drop</td><td><span class="kbd">Space</span></td><td><em>"FB Post dropped at position 2. New column order: FB DM, FB Post, TW Post."</em></td></tr>
+        <tr><td>Cancel</td><td><span class="kbd">Escape</span></td><td><em>"Reorder cancelled. FB Post returned to column 1 of 3."</em></td></tr>
+      </tbody>
+    </table>
+    <div class="warn"><span class="ni">WARN</span>After any drop, ALL column header <code>aria-label</code>s must update: <em>"FB DM, column 1 of 3"</em>, <em>"FB Post, column 2 of 3"</em>, <em>"TW Post, column 3 of 3"</em>. The full new order must also be announced via <code>aria-live</code>.</div>
+  </div>
+
+  <div class="src">REF: <a href="https://www.w3.org/WAI/WCAG22/Techniques/aria/ARIA11" target="_blank">WCAG Technique ARIA11 — Landmark Regions</a> · <a href="https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/" target="_blank">APG — Developing a Keyboard Interface</a> · <a href="https://www.w3.org/TR/WCAG22/#keyboard" target="_blank">WCAG 2.2 — 2.1.1 Keyboard</a></div>
+</div>
+
+<!-- 11 DROPDOWN WITH SEARCH -->
+<div id="dropdown" class="section">
+  <div class="sh">
+    <div class="num">11 / DROPDOWN WITH SEARCH</div>
+    <h2>Dropdown with search</h2>
+    <p class="desc">A searchable dropdown is a combobox pattern. Three focus zones — trigger button, search input, listbox — each with distinct keyboard behaviours.</p>
+    <div class="tags"><span class="tag ta">Level A</span><span class="tag tref">WCAG 2.1.1 · 4.1.2</span></div>
+  </div>
+
+  <div class="block">
+    <h3>Zone 1 — trigger button (dropdown closed)</h3>
+    <table>
+      <thead><tr><th>Key</th><th>What happens</th><th>Screen reader says</th></tr></thead>
+      <tbody>
+        <tr><td><span class="kbd">Tab</span></td><td>Lands on trigger. Dropdown stays closed.</td><td><em>"All types, collapsed, button"</em></td></tr>
+        <tr><td><span class="kbd">Enter</span> / <span class="kbd">Space</span></td><td>Opens dropdown. Focus moves to search input inside.</td><td><em>"Search, edit text"</em></td></tr>
+        <tr><td><span class="kbd">↓</span></td><td>Opens dropdown AND moves to first option — skips the input</td><td><em>"FB Post, 1 of 14, option"</em></td></tr>
+        <tr><td><span class="kbd">↑</span></td><td>Opens dropdown AND moves to last option</td><td><em>"My Assignments, 14 of 14, option"</em></td></tr>
+        <tr><td><span class="kbd">Alt + ↓</span></td><td>Opens dropdown without moving focus into it</td><td><em>"Expanded"</em></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="block">
+    <h3>Zone 2 — search input (dropdown open)</h3>
+    <table>
+      <thead><tr><th>Key</th><th>What happens</th><th>Screen reader says</th></tr></thead>
+      <tbody>
+        <tr><td>Any character</td><td>Types into search, filters results in real time</td><td>After debounce: <em>"4 results"</em> or <em>"No results found"</em> via <code>aria-live</code></td></tr>
+        <tr><td><span class="kbd">↓</span></td><td>Moves focus from input into list — lands on first visible option. Does NOT clear the search.</td><td><em>"FB Post, 1 of 4, option"</em></td></tr>
+        <tr><td><span class="kbd">↑</span></td><td>Moves to last option (wrap). Stays in input if already at top — do NOT wrap to bottom.</td><td><em>"My Assignments, 14 of 14, option"</em></td></tr>
+        <tr><td><span class="kbd">Enter</span></td><td>Selects highlighted option (if any). If none highlighted: applies filter.</td><td><em>"FB Post selected. Dropdown closed."</em></td></tr>
+        <tr><td><span class="kbd">Escape</span></td><td>First press: clears search input. Second press: closes dropdown.</td><td>First: <em>"Search cleared"</em>. Second: <em>"All types, collapsed, button"</em></td></tr>
+        <tr><td><span class="kbd">Tab</span></td><td>Closes dropdown without selecting. Focus moves to next page element.</td><td><em>"[Next element]"</em></td></tr>
+        <tr><td><span class="kbd">Home</span> / <span class="kbd">End</span></td><td>Moves text cursor in input — browser default. Do NOT override.</td><td>Cursor position change only</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="block">
+    <h3>Zone 3 — listbox (focus on an option)</h3>
+    <table>
+      <thead><tr><th>Key</th><th>What happens</th><th>Screen reader says</th></tr></thead>
+      <tbody>
+        <tr><td><span class="kbd">↓</span></td><td>Next option. Wraps from last to first.</td><td><em>"FB DM, 2 of 14, option"</em></td></tr>
+        <tr><td><span class="kbd">↑</span> (from first)</td><td>Returns focus to search input — does NOT wrap to bottom</td><td><em>"Search, edit text"</em></td></tr>
+        <tr><td><span class="kbd">Enter</span></td><td>Selects option. Closes dropdown. Focus returns to trigger.</td><td><em>"FB DM selected. Dropdown closed."</em></td></tr>
+        <tr><td><span class="kbd">Space</span></td><td>Multi-select: toggles without closing. Single-select: same as Enter.</td><td>Multi: <em>"FB DM, checked"</em>. Single: <em>"FB DM selected."</em></td></tr>
+        <tr><td><span class="kbd">Escape</span></td><td>Closes without selecting. Reverts to previous value.</td><td><em>"All types, collapsed, button"</em></td></tr>
+        <tr><td><span class="kbd">Home</span> / <span class="kbd">End</span></td><td>Jump to first / last option in list</td><td><em>"FB Post, 1 of 14, option"</em></td></tr>
+        <tr><td>Any printable char</td><td>Moves focus back to search input AND adds character</td><td><em>"Search: f — 4 results"</em></td></tr>
+        <tr><td><span class="kbd">Backspace</span></td><td>Moves focus back to input, removes last character</td><td><em>"Search, edit text"</em></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="block">
+    <h3>Multi-select variant</h3>
+    <ul class="rules">
+      <li>Dropdown stays open after each selection — user builds a set</li>
+      <li>Each option needs <code>aria-selected="true/false"</code> — NOT <code>aria-checked</code>. Listbox options always use <code>aria-selected</code>.</li>
+      <li>Trigger must announce count: <code>aria-label="Filter by platform: 3 selected, collapsed, button"</code> — not just a visual badge</li>
+      <li>Include a "Clear all" option keyboard users can reach — first item in list (reachable via <span class="kbd">Home</span>) or a dedicated button above the list</li>
+    </ul>
+  </div>
+
+  <div class="block">
+    <h3>Critical violations — what must never happen</h3>
+    <div class="danger" style="margin-bottom:8px"><span class="ni">ERR</span><strong style="color:var(--text)">Tab must never navigate through list options.</strong> Tab inside dropdown = close and exit. 20 options = 20+ Tab presses to escape. Keyboard trap equivalent.</div>
+    <div class="danger" style="margin-bottom:8px"><span class="ni">ERR</span><strong style="color:var(--text)">Never auto-select on Arrow key.</strong> Moving through options should only change highlight, not apply selection. Selection happens on Enter or Space only.</div>
+    <div class="danger" style="margin-bottom:8px"><span class="ni">ERR</span><strong style="color:var(--text)">Never lose search text when user arrows into list.</strong> User types "fb", arrows into results — the input must still show "fb".</div>
+    <div class="danger"><span class="ni">ERR</span><strong style="color:var(--text)">Debounce result count announcements.</strong> 150–200ms minimum. Without debouncing, typing "facebook" = 8 consecutive announcements that interrupt and disorient.</div>
+  </div>
+
+  <div class="src">REF: <a href="https://www.w3.org/WAI/ARIA/apg/patterns/combobox/" target="_blank">APG — Combobox Pattern</a> · <a href="https://www.w3.org/WAI/ARIA/apg/patterns/listbox/" target="_blank">APG — Listbox Pattern</a> · <a href="https://www.w3.org/TR/WCAG22/#keyboard" target="_blank">WCAG 2.2 — 2.1.1 Keyboard</a> · <a href="https://www.w3.org/TR/WCAG22/#name-role-value" target="_blank">WCAG 2.2 — 4.1.2 Name, Role, Value</a></div>
+</div>
+
+<!-- 12 TABS FULL SPEC -->
+<div id="tabs2" class="section">
+  <div class="sh">
+    <div class="num">12 / TABS — FULL SPEC</div>
+    <h2>Tabs — full spec</h2>
+    <p class="desc">The entire tab list = one Tab stop. Arrow keys navigate between tabs. Tab enters the panel. This is the most commonly mis-implemented widget.</p>
+    <div class="tags"><span class="tag ta">Level A</span><span class="tag tref">WCAG 2.1.1 · 2.4.3 · 4.1.2</span></div>
+  </div>
+
+  <div class="block">
+    <h3>Complete keyboard map</h3>
+    <table>
+      <thead><tr><th>Key</th><th>Where</th><th>What happens</th></tr></thead>
+      <tbody>
+        <tr><td><span class="kbd">Tab</span></td><td>Anywhere on page</td><td>Lands on the active tab button (whole tablist = 1 Tab stop). Announces: <em>"Overview tab, selected, 1 of 4"</em></td></tr>
+        <tr><td><span class="kbd">← →</span></td><td>On tab list</td><td>Moves between tabs without entering content. Automatic activation: content updates on arrow. Manual: requires Enter/Space to activate.</td></tr>
+        <tr><td><span class="kbd">Home</span> / <span class="kbd">End</span></td><td>On tab list</td><td>Jump to first / last tab. Required by ARIA spec — must be implemented.</td></tr>
+        <tr><td><span class="kbd">Tab</span></td><td>On tab list</td><td>Moves focus INTO the panel — first focusable element inside. If no focusable elements: panel needs <code>tabindex="0"</code>.</td></tr>
+        <tr><td><span class="kbd">Shift + Tab</span></td><td>First panel element</td><td>Returns focus to the <strong style="color:var(--text)">currently active</strong> tab button — not first tab, not page top. Requires explicit handling.</td></tr>
+        <tr><td><span class="kbd">Enter</span> / <span class="kbd">Space</span></td><td>Tab button (manual mode)</td><td>Activates tab and loads content. Used in manual activation pattern.</td></tr>
+        <tr><td><span class="kbd">Escape</span></td><td>Inside panel</td><td>Returns focus to active tab button. Gives fast exit from deep panel content.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="block">
+    <h3>Automatic vs manual activation</h3>
+    <div class="g2">
+      <div class="scard">
+        <div class="slabel">Automatic activation</div>
+        <div class="sval" style="margin-bottom:6px">Arrow key moves focus AND activates tab immediately. Content loads as you navigate.</div>
+        <div style="font-size:11px;color:var(--text-faint)">Use when: tab content is already in DOM or loads in &lt;100ms.</div>
+      </div>
+      <div class="scard">
+        <div class="slabel">Manual activation</div>
+        <div class="sval" style="margin-bottom:6px">Arrow moves focus only. Enter or Space loads content. Prevents multiple API calls while arrowing.</div>
+        <div style="font-size:11px;color:var(--text-faint)">Use when: tabs trigger heavy data loads, API calls, or chart renders.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="block">
+    <h3>Screen reader announcements — design these deliberately</h3>
+    <table>
+      <thead><tr><th>Moment</th><th>Screen reader says</th><th>What makes it work</th></tr></thead>
+      <tbody>
+        <tr><td>Tab lands on list</td><td><em>"Overview, tab, selected, 1 of 4"</em></td><td><code>role="tab"</code> + <code>aria-selected="true"</code> + <code>aria-setsize="4"</code> + <code>aria-posinset="1"</code></td></tr>
+        <tr><td>Arrow to next tab</td><td><em>"Messages, tab, selected, 2 of 4"</em></td><td>Focus moves + <code>aria-selected</code> updates</td></tr>
+        <tr><td>Tab into panel</td><td><em>"Messages panel, [first element]"</em></td><td><code>role="tabpanel"</code> + <code>aria-labelledby="tab-messages"</code></td></tr>
+        <tr><td>Unread count on tab</td><td><em>"Messages, 5 unread, tab, selected, 2 of 4"</em></td><td><code>aria-label="Messages, 5 unread"</code> on the tab button</td></tr>
+        <tr><td>Disabled tab</td><td><em>"Reports, tab, dimmed, 3 of 4"</em></td><td><code>aria-disabled="true"</code> — NOT HTML <code>disabled</code> which removes it from Tab order</td></tr>
+        <tr><td>Shift+Tab exits panel</td><td><em>"Messages, tab, selected, 2 of 4"</em></td><td>Explicit keydown handler on first panel element</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="block">
+    <h3>Required markup</h3>
+    <pre><span class="k">&lt;div</span> <span class="a">role</span>=<span class="s">"tablist"</span> <span class="a">aria-label</span>=<span class="s">"Conversation sections"</span><span class="k">&gt;</span>
+  <span class="k">&lt;button</span> <span class="a">role</span>=<span class="s">"tab"</span> <span class="a">aria-selected</span>=<span class="s">"true"</span>  <span class="a">tabindex</span>=<span class="s">"0"</span>
+          <span class="a">aria-controls</span>=<span class="s">"panel-1"</span> <span class="a">aria-setsize</span>=<span class="s">"4"</span> <span class="a">aria-posinset</span>=<span class="s">"1"</span><span class="k">&gt;</span>Overview<span class="k">&lt;/button&gt;</span>
+  <span class="k">&lt;button</span> <span class="a">role</span>=<span class="s">"tab"</span> <span class="a">aria-selected</span>=<span class="s">"false"</span> <span class="a">tabindex</span>=<span class="s">"-1"</span>
+          <span class="a">aria-controls</span>=<span class="s">"panel-2"</span> <span class="a">aria-setsize</span>=<span class="s">"4"</span> <span class="a">aria-posinset</span>=<span class="s">"2"</span><span class="k">&gt;</span>Messages<span class="k">&lt;/button&gt;</span>
+<span class="k">&lt;/div&gt;</span>
+<span class="k">&lt;div</span> <span class="a">role</span>=<span class="s">"tabpanel"</span> <span class="a">id</span>=<span class="s">"panel-1"</span> <span class="a">aria-labelledby</span>=<span class="s">"tab-1"</span> <span class="a">tabindex</span>=<span class="s">"0"</span><span class="k">&gt;</span>...<span class="k">&lt;/div&gt;</span>
+<span class="k">&lt;div</span> <span class="a">role</span>=<span class="s">"tabpanel"</span> <span class="a">id</span>=<span class="s">"panel-2"</span> <span class="a">aria-labelledby</span>=<span class="s">"tab-2"</span> <span class="a">tabindex</span>=<span class="s">"0"</span> <span class="a">inert</span><span class="k">&gt;</span>...<span class="k">&lt;/div&gt;</span></pre>
+  </div>
+
+  <div class="block">
+    <h3>Critical violations</h3>
+    <div class="danger" style="margin-bottom:8px"><span class="ni">ERR</span><strong style="color:var(--text)">Never make each tab button a separate Tab stop.</strong> Tablist = 1 Tab stop. Use roving tabindex: active tab = <code>tabindex="0"</code>, all others = <code>tabindex="-1"</code>.</div>
+    <div class="danger" style="margin-bottom:8px"><span class="ni">ERR</span><strong style="color:var(--text)">Never forget <code>aria-selected</code> on inactive tabs.</strong> Active: <code>aria-selected="true"</code>. All others: <code>aria-selected="false"</code> — explicitly false, not absent.</div>
+    <div class="danger" style="margin-bottom:8px"><span class="ni">ERR</span><strong style="color:var(--text)">Never hide inactive panels with <code>display:none</code>.</strong> Use the <code>inert</code> attribute instead. <code>display:none</code> breaks focus management when switching tabs.</div>
+    <div class="danger"><span class="ni">ERR</span><strong style="color:var(--text)">Don't move focus when tab content loads.</strong> The user is still on the tab list — they decide when to enter the panel with Tab.</div>
+  </div>
+
+  <div class="src">REF: <a href="https://www.w3.org/WAI/ARIA/apg/patterns/tabs/" target="_blank">APG — Tabs Pattern</a> · <a href="https://www.w3.org/WAI/ARIA/apg/patterns/tabs/examples/tabs-manual/" target="_blank">APG — Manual Activation Example</a> · <a href="https://www.w3.org/TR/WCAG22/#keyboard" target="_blank">WCAG 2.2 — 2.1.1 Keyboard</a> · <a href="https://www.w3.org/TR/WCAG22/#focus-order" target="_blank">WCAG 2.2 — 2.4.3 Focus Order</a></div>
+</div>
+
+<!-- 13 CREATE MESSAGE FLOW -->
+<div id="msgflow" class="section">
+  <div class="sh">
+    <div class="num">13 / CREATE MESSAGE FLOW</div>
+    <h2>Create message flow</h2>
+    <p class="desc">A concrete end-to-end example of accessible form validation — from first Tab to success announcement. Every step has a defined accessible state.</p>
+    <div class="tags"><span class="tag ta">Level A</span><span class="tag taa">Level AA</span><span class="tag tref">WCAG 3.3.1 · 3.3.3</span></div>
+  </div>
+
+  <div class="block">
+    <h3>The complete flow</h3>
+    <table>
+      <thead><tr><th>Step</th><th>User action</th><th>Screen reader says</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>Tab lands on message textarea</td><td><em>"Message, required, edit text"</em></td></tr>
+        <tr><td>2</td><td>Type message → Tab → lands on channel dropdown</td><td><em>"Channel, required, Select a channel, collapsed, combobox"</em></td></tr>
+        <tr><td>3</td><td>Tab again → skip to Create message button (no channel selected)</td><td><em>"Create message, button"</em></td></tr>
+        <tr><td>4</td><td>Enter on button — channel missing — validation fires</td><td><em>"Channel, required, invalid, Select a channel. Please select a channel before sending."</em></td></tr>
+        <tr><td>5</td><td>User selects a channel</td><td><em>"Facebook Page selected. Channel, valid."</em></td></tr>
+        <tr><td>6</td><td>Tab → button → Enter — all valid</td><td><em>"Message sent to Facebook Page."</em></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="block">
+    <h3>Step 4 — error fires: what must happen simultaneously</h3>
+    <ul class="rules">
+      <li>Error message appears below the channel field</li>
+      <li>The field gets <code>aria-invalid="true"</code></li>
+      <li>Focus moves to the channel dropdown — not to the error message, not to the top of the form</li>
+    </ul>
+    <div class="note"><span class="ni">INFO</span>Focus moves to the field that needs fixing. The user can act immediately — no extra navigation required.</div>
+  </div>
+
+  <div class="block">
+    <h3>Step 5 — clear errors eagerly, not lazily</h3>
+    <div class="warn"><span class="ni">WARN</span><strong style="color:var(--text)">Clear the error on change</strong>, not on next submit attempt. Waiting until resubmit to clear the error is confusing — the user doesn't know if their fix worked.</div>
+    <pre><span class="c">// Clear error immediately when user selects a channel</span>
+channelInput.<span class="fn">addEventListener</span>(<span class="s">'change'</span>, () => {
+  channelInput.setAttribute(<span class="s">'aria-invalid'</span>, <span class="s">'false'</span>);
+  errorEl.textContent = <span class="s">''</span>;
+  <span class="fn">announce</span>(<span class="s">'Facebook Page selected. Channel, valid.'</span>);
+});</pre>
+  </div>
+
+  <div class="src">REF: <a href="https://www.w3.org/TR/WCAG22/#error-identification" target="_blank">WCAG 2.2 — 3.3.1 Error Identification</a> · <a href="https://www.w3.org/TR/WCAG22/#error-suggestion" target="_blank">WCAG 2.2 — 3.3.3 Error Suggestion</a> · <a href="https://www.w3.org/WAI/WCAG22/Techniques/aria/ARIA21" target="_blank">WCAG Technique ARIA21 — aria-invalid</a></div>
+</div>
+
+<!-- 14 CHECKBOX SELECT ALL -->
+<div id="checkbox" class="section">
+  <div class="sh">
+    <div class="num">14 / CHECKBOX — SELECT ALL</div>
+    <h2>Checkbox — select all</h2>
+    <p class="desc">The select-all checkbox has three states: checked, unchecked, and indeterminate. The indeterminate state must be set via JavaScript — there is no HTML attribute for it.</p>
+    <div class="tags"><span class="tag ta">Level A</span><span class="tag tref">WCAG 1.3.1 · 4.1.2</span></div>
+  </div>
+
+  <div class="block">
+    <h3>Three states</h3>
+    <div class="g2">
+      <div class="scard"><div class="slabel">Checked</div><div class="sval">All items selected. Screen reader: <em>"checked"</em></div></div>
+      <div class="scard"><div class="slabel">Unchecked</div><div class="sval">No items selected. Screen reader: <em>"not checked"</em></div></div>
+    </div>
+    <div class="scard" style="margin-top:10px"><div class="slabel">Indeterminate</div><div class="sval">Some items selected. Set via JS: <code>checkbox.indeterminate = true</code>. Screen reader announces automatically as <em>"mixed"</em> — no extra ARIA needed.</div></div>
+  </div>
+
+  <div class="block">
+    <h3>Required markup</h3>
+    <pre><span class="k">&lt;fieldset&gt;</span>
+  <span class="k">&lt;legend&gt;</span>Team members<span class="k">&lt;/legend&gt;</span>
+
+  <span class="k">&lt;div&gt;</span>
+    <span class="k">&lt;input</span> <span class="a">type</span>=<span class="s">"checkbox"</span> <span class="a">id</span>=<span class="s">"select-all"</span>
+           <span class="a">aria-controls</span>=<span class="s">"item1 item2 item3"</span><span class="k">&gt;</span>  <span class="c">← declares what it controls</span>
+    <span class="k">&lt;label</span> <span class="a">for</span>=<span class="s">"select-all"</span><span class="k">&gt;</span>Select all<span class="k">&lt;/label&gt;</span>
+  <span class="k">&lt;/div&gt;</span>
+
+  <span class="k">&lt;div&gt;</span>
+    <span class="k">&lt;input</span> <span class="a">type</span>=<span class="s">"checkbox"</span> <span class="a">id</span>=<span class="s">"item1"</span> <span class="a">name</span>=<span class="s">"items"</span><span class="k">&gt;</span>
+    <span class="k">&lt;label</span> <span class="a">for</span>=<span class="s">"item1"</span><span class="k">&gt;</span>Alice<span class="k">&lt;/label&gt;</span>
+  <span class="k">&lt;/div&gt;</span>
+  <span class="c">&lt;!-- repeat for item2, item3 ... --&gt;</span>
+<span class="k">&lt;/fieldset&gt;</span></pre>
+  </div>
+
+  <div class="block">
+    <h3>JavaScript logic</h3>
+    <pre><span class="k">const</span> selectAll = document.<span class="fn">getElementById</span>(<span class="s">'select-all'</span>);
+<span class="k">const</span> items = document.<span class="fn">querySelectorAll</span>(<span class="s">'input[name="items"]'</span>);
+
+selectAll.<span class="fn">addEventListener</span>(<span class="s">'change'</span>, () => {
+  items.<span class="fn">forEach</span>(item => item.checked = selectAll.checked);
+  <span class="fn">announce</span>(selectAll.checked ? <span class="s">'All items selected'</span> : <span class="s">'All items deselected'</span>);
+});
+
+<span class="k">function</span> <span class="fn">updateSelectAll</span>() {
+  <span class="k">const</span> total = items.length;
+  <span class="k">const</span> checked = [...items].<span class="fn">filter</span>(i => i.checked).length;
+
+  <span class="k">if</span> (checked === <span class="v">0</span>) {
+    selectAll.checked = <span class="v">false</span>;
+    selectAll.indeterminate = <span class="v">false</span>;
+    <span class="fn">announce</span>(<span class="s">'No items selected'</span>);
+  } <span class="k">else if</span> (checked === total) {
+    selectAll.checked = <span class="v">true</span>;
+    selectAll.indeterminate = <span class="v">false</span>;
+    <span class="fn">announce</span>(<span class="s">'All items selected'</span>);
+  } <span class="k">else</span> {
+    selectAll.checked = <span class="v">false</span>;
+    selectAll.indeterminate = <span class="v">true</span>;  <span class="c">← JS only — no HTML attribute for this</span>
+    <span class="fn">announce</span>(<span class="s">`${checked} of ${total} items selected`</span>);
+  }
+}
+
+items.<span class="fn">forEach</span>(item => item.<span class="fn">addEventListener</span>(<span class="s">'change'</span>, updateSelectAll));</pre>
+    <div class="note" style="margin-top:10px"><span class="ni">INFO</span><em>"2 of 5 selected"</em> via <code>aria-live</code> is far more useful than the checkbox state alone. Always announce the count — don't rely on screen readers interpreting "mixed" as meaningful context.</div>
+  </div>
+
+  <div class="block">
+    <h3>Key rules</h3>
+    <ul class="rules">
+      <li>Always use a real <code>&lt;input type="checkbox"&gt;</code> — never <code>&lt;div role="checkbox"&gt;</code> unless you have a very good reason. Native elements give keyboard support and screen reader behavior for free.</li>
+      <li>Wrap everything in <code>&lt;fieldset&gt;</code> + <code>&lt;legend&gt;</code> so screen readers announce the group name with each checkbox</li>
+      <li>Use <code>aria-controls</code> on the select-all to declare the relationship — JAWS and NVDA surface this to users</li>
+      <li>The indeterminate state must be set via JS (<code>.indeterminate = true</code>) — there is no HTML attribute for it</li>
+      <li>Announce count changes via <code>aria-live</code> — <em>"2 of 5 selected"</em> is far more useful than just "mixed"</li>
+    </ul>
+  </div>
+
+  <div class="src">REF: <a href="https://www.w3.org/WAI/ARIA/apg/patterns/checkbox/" target="_blank">APG — Checkbox Pattern (tri-state)</a> · <a href="https://www.w3.org/TR/WCAG22/#info-and-relationships" target="_blank">WCAG 2.2 — 1.3.1 Info and Relationships</a> · <a href="https://www.w3.org/TR/WCAG22/#name-role-value" target="_blank">WCAG 2.2 — 4.1.2 Name, Role, Value</a></div>
+</div>
+
+</main>
+</div>
+
+<script>
+// Navigation
+function show(id,el){event.preventDefault();document.querySelectorAll('.section').forEach(s=>s.classList.remove('visible'));document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));document.getElementById(id).classList.add('visible');if(el)el.classList.add('active');window.scrollTo(0,0);}
+
+// Search index — built from section headings and block titles
+const searchIndex = [];
+
+function buildIndex() {
+  document.querySelectorAll('.section').forEach(sec => {
+    const id = sec.id;
+    const sectionTitle = sec.querySelector('.sh h2')?.textContent?.trim() || id;
+    const num = sec.querySelector('.sh .num')?.textContent?.trim() || '';
+
+    // Index block headings
+    sec.querySelectorAll('.block').forEach(block => {
+      const h3 = block.querySelector('h3');
+      if (!h3) return;
+      const title = h3.textContent.replace(/\s+/g,' ').trim();
+      // Get text content (exclude nested code verbosity)
+      const bodyText = block.innerText.substring(0, 300).replace(/\s+/g,' ').trim();
+      searchIndex.push({ id, sectionTitle, num, blockTitle: title, body: bodyText, el: block });
+    });
+
+    // Also index section-level
+    searchIndex.push({ id, sectionTitle, num, blockTitle: null, body: sec.querySelector('.sh .desc')?.textContent || '', el: null, isSection: true });
+  });
+}
+
+function escapeRegex(s) { return s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'); }
+
+function highlight(text, query) {
+  if (!query) return text;
+  const re = new RegExp(`(${escapeRegex(query)})`, 'gi');
+  return text.replace(re, '<mark>$1</mark>');
+}
+
+const searchBox = document.getElementById('sideSearch');
+const resultsEl = document.getElementById('searchResults');
+let activeIdx = -1;
+let currentResults = [];
+
+searchBox.addEventListener('input', () => {
+  const q = searchBox.value.trim();
+  if (q.length < 2) { resultsEl.innerHTML=''; resultsEl.classList.remove('visible'); return; }
+
+  const re = new RegExp(escapeRegex(q), 'gi');
+  const seen = new Set();
+  currentResults = [];
+
+  // Match sections and blocks
+  searchIndex.forEach(item => {
+    const haystack = `${item.sectionTitle} ${item.blockTitle||''} ${item.body}`;
+    if (re.test(haystack)) {
+      const key = item.id + (item.blockTitle || '');
+      if (!seen.has(key)) { seen.add(key); currentResults.push(item); }
+    }
+  });
+
+  // Cap at 12
+  currentResults = currentResults.slice(0, 12);
+  activeIdx = -1;
+
+  if (!currentResults.length) {
+    resultsEl.innerHTML = `<div class="sr-empty">No results for "${q}"</div>`;
+  } else {
+    resultsEl.innerHTML = currentResults.map((r, i) =>
+      `<div class="sr-item" data-idx="${i}">
+        <div class="sr-section">${highlight(r.num + ' ' + r.sectionTitle, q)}</div>
+        <div class="sr-text">${highlight(r.blockTitle || r.sectionTitle, q)}</div>
+      </div>`
+    ).join('');
+    resultsEl.querySelectorAll('.sr-item').forEach(el => {
+      el.addEventListener('mousedown', e => {
+        e.preventDefault();
+        const idx = parseInt(el.dataset.idx);
+        selectResult(idx);
+      });
+    });
+  }
+  resultsEl.classList.add('visible');
+});
+
+searchBox.addEventListener('keydown', e => {
+  const items = resultsEl.querySelectorAll('.sr-item');
+  if (e.key === 'ArrowDown') { e.preventDefault(); activeIdx = Math.min(activeIdx+1, items.length-1); updateActive(items); }
+  else if (e.key === 'ArrowUp') { e.preventDefault(); activeIdx = Math.max(activeIdx-1, -1); updateActive(items); }
+  else if (e.key === 'Enter' && activeIdx >= 0) { e.preventDefault(); selectResult(activeIdx); }
+  else if (e.key === 'Escape') { closeSearch(); }
+});
+
+function updateActive(items) {
+  items.forEach((el,i) => el.classList.toggle('active', i === activeIdx));
+}
+
+function selectResult(idx) {
+  const r = currentResults[idx];
+  if (!r) return;
+  // Show the section
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('visible'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById(r.id).classList.add('visible');
+  const navEl = document.querySelector(`.nav-item[onclick*="'${r.id}'"]`);
+  if (navEl) navEl.classList.add('active');
+  // Scroll to block if specific
+  setTimeout(() => {
+    if (r.el) {
+      r.el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      r.el.classList.add('search-match');
+      setTimeout(() => r.el.classList.remove('search-match'), 1800);
+    } else { window.scrollTo(0,0); }
+  }, 50);
+  closeSearch();
+}
+
+function closeSearch() {
+  searchBox.value = '';
+  resultsEl.innerHTML = '';
+  resultsEl.classList.remove('visible');
+  activeIdx = -1;
+  currentResults = [];
+}
+
+document.addEventListener('click', e => {
+  if (!e.target.closest('.search-wrap')) closeSearch();
+});
+
+document.addEventListener('DOMContentLoaded', buildIndex);
+window.addEventListener('load', buildIndex);
+</script>
+</body>
+</html>
