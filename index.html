@@ -1,9 +1,11 @@
-<html lang="en"><head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>A11Y Reference — WCAG 2.2 Developer Guide</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&amp;family=IBM+Plex+Sans:wght@300;400;500;600&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
     --bg: #0d0d0d;
@@ -34,7 +36,7 @@
   *{box-sizing:border-box;margin:0;padding:0}
   body{font-family:var(--sans);background:var(--bg);color:var(--text);line-height:1.7;font-size:16px}
   .layout{display:grid;grid-template-columns:260px 1fr;min-height:100vh}
-
+ 
   /* ── Sidebar ── */
   .sidebar{background:var(--surface);border-right:1px solid var(--border);position:sticky;top:0;height:100vh;overflow-y:auto;display:flex;flex-direction:column}
   .sidebar::-webkit-scrollbar{width:3px}
@@ -44,7 +46,7 @@
   .brand-tag::before{content:"";display:inline-block;width:6px;height:6px;background:var(--blue-bright);border-radius:1px}
   .brand h1{font-size:16px;font-weight:600;color:var(--text);letter-spacing:-.01em;line-height:1.3}
   .brand p{font-family:var(--mono);font-size:10px;color:var(--text-faint);margin-top:4px;letter-spacing:.05em}
-
+ 
   /* Search */
   .search-wrap{padding:12px 18px;border-bottom:1px solid var(--border)}
   .search-box{width:100%;background:var(--surface2);border:1px solid var(--border-med);border-radius:var(--r);padding:7px 10px 7px 30px;font-family:var(--sans);font-size:12.5px;color:var(--text);outline:none;transition:border-color .15s;position:relative}
@@ -61,7 +63,7 @@
   .sr-item .sr-text{font-size:12.5px}
   .sr-empty{padding:12px 14px;font-size:12.5px;color:var(--text-faint);text-align:center}
   mark{background:rgba(0,102,255,.25);color:var(--blue-bright);border-radius:2px;padding:0 2px}
-
+ 
   .nav-label{font-family:var(--mono);font-size:9px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--text-faint);padding:14px 18px 6px}
   .nav-item{display:flex;align-items:center;gap:8px;padding:8px 18px;font-size:13px;color:var(--text-muted);cursor:pointer;text-decoration:none;transition:all .12s;border-left:2px solid transparent}
   .nav-item:hover{color:var(--text);background:var(--surface2)}
@@ -71,12 +73,12 @@
   .nav-item.active .nav-num{color:#6aabff}
   .sidebar-foot{margin-top:auto;padding:14px 18px;border-top:1px solid var(--border);font-family:var(--mono);font-size:11px;color:var(--text-faint);line-height:1.4}
   .sidebar-foot a{color:var(--blue-bright);text-decoration:none;display:block;padding:6px 0;min-height:24px}
-
+ 
   /* ── Main ── */
   .main{padding:48px 64px 100px;max-width:1100px;width:100%}
   .section{display:none}
   .section.visible{display:block}
-
+ 
   /* Section header */
   .sh{margin-bottom:36px;padding-bottom:24px;border-bottom:1px solid var(--border)}
   .sh .num{font-family:var(--mono);font-size:11px;color:var(--blue-bright);letter-spacing:.1em;margin-bottom:10px}
@@ -88,24 +90,24 @@
   .taa{color:var(--yellow);border-color:rgba(255,204,0,.3);background:var(--yellow-dim)}
   .tnew{color:var(--cyan);border-color:rgba(0,200,255,.3);background:var(--cyan-dim)}
   .tref{color:var(--text-faint);border-color:var(--border);background:transparent}
-
+ 
   /* Blocks */
   .block{background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);padding:24px 26px;margin-bottom:14px}
   .block h3{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);margin-bottom:16px;display:flex;align-items:center;gap:8px}
   .block h3::after{content:"";flex:1;height:1px;background:var(--border)}
-
+ 
   /* Code */
   pre{font-family:var(--mono);font-size:13px;background:#0a0a0a;border:1px solid var(--border);border-left:3px solid var(--blue);border-radius:var(--r);padding:16px 18px;overflow-x:auto;margin:12px 0;line-height:1.8;color:#c8d0e0}
   pre .c{color:#444} pre .k{color:#4d9bff} pre .s{color:#7ec8a0} pre .a{color:#c8a0d0} pre .v{color:#f0c060} pre .fn{color:#00c8ff}
   code{font-family:var(--mono);font-size:12.5px;background:var(--surface3);border:1px solid var(--border);padding:2px 7px;border-radius:2px;color:var(--cyan)}
-
+ 
   /* Tables */
   table{width:100%;border-collapse:collapse;font-size:14px;margin:12px 0}
   th{text-align:left;padding:10px 14px;background:var(--surface2);font-family:var(--mono);font-size:10px;font-weight:500;color:var(--text-faint);letter-spacing:.08em;text-transform:uppercase;border-bottom:1px solid var(--border-med)}
   td{padding:11px 14px;border-bottom:1px solid var(--border);vertical-align:top;line-height:1.55;color:var(--text-muted)}
   tr:last-child td{border-bottom:none}
   td strong{color:var(--text);font-weight:500} td a{color:var(--blue-bright);text-decoration:none}
-
+ 
   /* Do/dont */
   .split{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0}
   .do,.dont{padding:14px 16px;border-radius:var(--r);font-size:13.5px;line-height:1.65}
@@ -116,7 +118,7 @@
   .do .dlabel{color:var(--green)} .dont .dlabel{color:var(--red)}
   .do code{background:rgba(0,230,118,.12);border-color:rgba(0,230,118,.2);color:var(--green)}
   .dont code{background:rgba(255,68,68,.1);border-color:rgba(255,68,68,.2);color:#ff6b6b}
-
+ 
   /* Callouts */
   .note,.warn,.danger{border-radius:var(--r);padding:12px 16px;font-size:14px;margin:12px 0;line-height:1.65;display:flex;gap:10px;align-items:flex-start}
   .note{background:var(--blue-dim);border:1px solid rgba(0,102,255,.25);color:var(--blue-bright)}
@@ -126,7 +128,7 @@
   .note .ni{background:rgba(0,102,255,.3);color:#6db3ff}
   .warn .ni{background:rgba(255,204,0,.3);color:var(--yellow)}
   .danger .ni{background:rgba(255,68,68,.3);color:var(--red)}
-
+ 
   /* Lists */
   .rules{list-style:none}
   .rules li{padding:9px 0;border-bottom:1px solid var(--border);font-size:14.5px;color:var(--text-muted);display:flex;gap:12px;align-items:flex-start;line-height:1.6}
@@ -136,36 +138,36 @@
   .checks li{padding:9px 0;border-bottom:1px solid var(--border);font-size:14.5px;color:var(--text-muted);display:flex;gap:14px;align-items:flex-start;line-height:1.6}
   .checks li:last-child{border-bottom:none}
   .chk{width:15px;height:15px;border:1px solid var(--border-med);border-radius:2px;flex-shrink:0;margin-top:3px}
-
+ 
   /* Keys */
   .kbd{font-family:var(--mono);font-size:11px;background:var(--surface3);border:1px solid var(--border-med);border-bottom:2px solid var(--border-med);border-radius:3px;padding:2px 8px;color:var(--text);white-space:nowrap}
-
+ 
   /* Sub-labels */
   .sub{font-family:var(--mono);font-size:10px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--text-faint);margin:18px 0 8px}
-
+ 
   /* Grid 2 */
   .g2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0}
   .scard{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);padding:16px}
   .scard .slabel{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--text-faint);margin-bottom:6px}
   .scard .sval{font-size:14px;color:var(--text);line-height:1.55}
-
+ 
   /* Sources */
   .src{font-family:var(--mono);font-size:11px;color:var(--text-faint);margin-top:22px;padding-top:14px;border-top:1px solid var(--border);line-height:1.9}
   .src a{color:var(--blue-bright);text-decoration:none}
-
+ 
   /* Search highlight in content */
   .block.search-match{border-color:rgba(0,102,255,.4)}
-
+ 
   /* Print */
   @media print{.sidebar{display:none}.layout{grid-template-columns:1fr}.section{display:block!important}pre{white-space:pre-wrap}body{background:white;color:black}.main{padding:1rem}}
-
+ 
   /* Mobile */
   @media(max-width:860px){.layout{grid-template-columns:1fr}.sidebar{position:static;height:auto;flex-direction:row;flex-wrap:wrap;align-items:center;gap:4px;padding:10px;border-right:none;border-bottom:1px solid var(--border)}.brand,.nav-label,.sidebar-foot,.search-wrap{display:none}.nav-item{padding:6px 10px;font-size:12px;border:1px solid var(--border);border-left:1px solid var(--border);border-radius:3px}.nav-item.active{border-color:var(--blue)}.main{padding:24px 20px 48px}.split,.g2{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 <div class="layout">
-
+ 
 <nav class="sidebar">
   <div class="brand">
     <div class="brand-tag">Developer Reference</div>
@@ -194,15 +196,16 @@
   <a class="nav-item" href="#" onclick="show('tabs2',this)"><span class="nav-num">12</span>Tabs — full spec</a>
   <a class="nav-item" href="#" onclick="show('msgflow',this)"><span class="nav-num">13</span>Create message flow</a>
   <a class="nav-item" href="#" onclick="show('checkbox',this)"><span class="nav-num">14</span>Checkbox — select all</a>
+  <a class="nav-item" href="#" onclick="show('breadcrumb',this)"><span class="nav-num">15</span>Breadcrumb navigation</a>
   <div class="sidebar-foot">
     <a href="https://www.w3.org/TR/WCAG22/" target="_blank">WCAG 2.2 spec ↗</a><br>
     <a href="https://webaim.org/standards/wcag/checklist" target="_blank">WebAIM checklist ↗</a><br>
     <a href="https://www.w3.org/WAI/ARIA/apg/" target="_blank">W3C ARIA APG ↗</a>
   </div>
 </nav>
-
+ 
 <main class="main">
-
+ 
 <!-- 01 FORMS -->
 <div id="forms" class="section visible">
   <div class="sh">
@@ -211,7 +214,7 @@
     <p class="desc">Every form control must have a persistent, programmatically associated label. Placeholder text is not a label.</p>
     <div class="tags"><span class="tag ta">Level A</span><span class="tag taa">Level AA</span><span class="tag tref">WCAG 1.3.1 · 3.3.2 · 1.3.5</span></div>
   </div>
-
+ 
   <div class="block">
     <h3>Label association</h3>
     <div class="split">
@@ -219,7 +222,7 @@
       <div class="dont"><div class="dlabel">Never</div><code>&lt;input type="email"<br>&nbsp;placeholder="Email"&gt;</code><p style="margin-top:6px;font-size:12px;color:var(--text-muted)">Disappears on input. Invisible to screen readers in error state.</p></div>
     </div>
   </div>
-
+ 
   <div class="block">
     <h3>Group related inputs</h3>
     <pre><span class="k">&lt;fieldset&gt;</span>
@@ -234,7 +237,7 @@
       <li>The legend is announced before each individual label inside the group</li>
     </ul>
   </div>
-
+ 
   <div class="block">
     <h3>Required fields</h3>
     <ul class="rules">
@@ -243,7 +246,7 @@
       <li>Never rely on color alone to show required state</li>
     </ul>
   </div>
-
+ 
   <div class="block">
     <h3>Autocomplete attributes — WCAG 1.3.5</h3>
     <div class="note"><span class="ni">INFO</span>Personal data fields must carry <code>autocomplete</code> attributes so password managers and browsers can assist users with cognitive and motor disabilities.</div>
@@ -259,7 +262,7 @@
       </tbody>
     </table>
   </div>
-
+ 
   <div class="block">
     <h3>Correct input types</h3>
     <ul class="rules">
@@ -270,10 +273,10 @@
       <li><code>type="search"</code> — adds clear button in some browsers</li>
     </ul>
   </div>
-
+ 
   <div class="src">REF: <a href="https://www.w3.org/TR/WCAG22/" target="_blank">WCAG 2.2 spec</a> · <a href="https://webaim.org/standards/wcag/checklist" target="_blank">WebAIM checklist</a></div>
 </div>
-
+ 
 <!-- 02 ERRORS -->
 <div id="errors" class="section">
   <div class="sh">
@@ -282,9 +285,9 @@
     <p class="desc">When something fails, users must be told what failed and how to fix it — in text, not color alone.</p>
     <div class="tags"><span class="tag ta">Level A</span><span class="tag taa">Level AA</span><span class="tag tref">WCAG 3.3.1 · 3.3.2 · 3.3.3</span></div>
   </div>
-
+ 
   <div class="danger"><span class="ni">ERR</span>Never use color or border alone to indicate an error. Screen readers cannot perceive visual styling. Always pair visual cues with descriptive text.</div>
-
+ 
   <div class="block">
     <h3>Required markup pattern</h3>
     <pre><span class="k">&lt;label</span> <span class="a">for</span>=<span class="s">"email"</span><span class="k">&gt;</span>Email address<span class="k">&lt;/label&gt;</span>
@@ -306,7 +309,7 @@
       </tbody>
     </table>
   </div>
-
+ 
   <div class="block">
     <h3>Error message rules</h3>
     <ul class="rules">
@@ -319,7 +322,7 @@
       <li>Provide format hints upfront where possible: <em>"Use MM/DD/YYYY"</em></li>
     </ul>
   </div>
-
+ 
   <div class="block">
     <h3>Validation timing</h3>
     <table>
@@ -331,7 +334,7 @@
       </tbody>
     </table>
   </div>
-
+ 
   <div class="block">
     <h3>Error summary — multi-field forms</h3>
     <pre><span class="k">&lt;div</span> <span class="a">role</span>=<span class="s">"alert"</span> <span class="a">aria-labelledby</span>=<span class="s">"err-head"</span><span class="k">&gt;</span>
@@ -342,10 +345,10 @@
   <span class="k">&lt;/ul&gt;</span>
 <span class="k">&lt;/div&gt;</span></pre>
   </div>
-
+ 
   <div class="src">REF: <a href="https://www.reform.app/blog/accessible-form-validation-best-practices" target="_blank">Accessible Form Validation</a> · <a href="https://accessdrum.com/en/tips-tricks-thursday-05-accessible-forms-input-fields-and-error-messages/" target="_blank">Access Drum: Forms &amp; Errors</a></div>
 </div>
-
+ 
 <!-- 03 KEYBOARD -->
 <div id="keyboard" class="section">
   <div class="sh">
@@ -354,7 +357,7 @@
     <p class="desc">Every task must be completable without a mouse. Unplug yours and try every flow.</p>
     <div class="tags"><span class="tag ta">Level A</span><span class="tag tref">WCAG 2.1.1 · 2.1.2 · 2.4.3 · 2.4.7</span></div>
   </div>
-
+ 
   <div class="block">
     <h3>Universal keys</h3>
     <table>
@@ -371,7 +374,7 @@
     </table>
     <div class="warn"><span class="ni">WARN</span><span><strong style="color:var(--text)">Enter vs Space:</strong> Buttons activate with either. Links activate with Enter only — Space scrolls the page. Use <code>&lt;button&gt;</code> for actions, <code>&lt;a&gt;</code> for navigation.</span></div>
   </div>
-
+ 
   <div class="block">
     <h3>Custom widget rules</h3>
     <ul class="rules">
@@ -382,11 +385,11 @@
       <li>Never write <code>outline: none</code> without a custom focus replacement</li>
     </ul>
   </div>
-
+ 
   <div class="block">
     <h3>Roving tabindex pattern</h3>
     <pre><span class="c">// Active: tabindex="0"  |  Others: tabindex="-1"</span>
-tabBtn.<span class="fn">addEventListener</span>(<span class="s">'keydown'</span>, (e) =&gt; {
+tabBtn.<span class="fn">addEventListener</span>(<span class="s">'keydown'</span>, (e) => {
   <span class="k">if</span> (e.key === <span class="s">'ArrowRight'</span>) {
     current.tabIndex = <span class="v">-1</span>;
     next.tabIndex = <span class="v">0</span>;
@@ -394,20 +397,20 @@ tabBtn.<span class="fn">addEventListener</span>(<span class="s">'keydown'</span>
   }
 });</pre>
   </div>
-
+ 
   <div class="block">
     <h3>Skip link — required on every page</h3>
     <pre><span class="c">&lt;!-- First element in &lt;body&gt; --&gt;</span>
 <span class="k">&lt;a</span> <span class="a">href</span>=<span class="s">"#main"</span> <span class="a">class</span>=<span class="s">"skip-link"</span><span class="k">&gt;</span>Skip to main content<span class="k">&lt;/a&gt;</span>
 <span class="k">&lt;main</span> <span class="a">id</span>=<span class="s">"main"</span><span class="k">&gt;</span>...<span class="k">&lt;/main&gt;</span>
-
+ 
 .skip-link { position: absolute; transform: translateY(-100%); }
 .skip-link:focus { transform: translateY(0); }</pre>
   </div>
-
+ 
   <div class="src">REF: <a href="https://webaim.org/standards/wcag/checklist" target="_blank">WebAIM checklist</a> · <a href="https://www.w3.org/WAI/ARIA/apg/" target="_blank">W3C ARIA APG</a></div>
 </div>
-
+ 
 <!-- 04 TABLES -->
 <div id="tables" class="section">
   <div class="sh">
@@ -416,7 +419,7 @@ tabBtn.<span class="fn">addEventListener</span>(<span class="s">'keydown'</span>
     <p class="desc">Tables are for data, never layout. Screen readers navigate cell-by-cell using header context.</p>
     <div class="tags"><span class="tag ta">Level A</span><span class="tag tref">WCAG 1.3.1</span></div>
   </div>
-
+ 
   <div class="block">
     <h3>Minimum required markup</h3>
     <pre><span class="k">&lt;table&gt;</span>
@@ -435,7 +438,7 @@ tabBtn.<span class="fn">addEventListener</span>(<span class="s">'keydown'</span>
   <span class="k">&lt;/tbody&gt;</span>
 <span class="k">&lt;/table&gt;</span></pre>
   </div>
-
+ 
   <div class="block">
     <h3>Element reference</h3>
     <table>
@@ -449,7 +452,7 @@ tabBtn.<span class="fn">addEventListener</span>(<span class="s">'keydown'</span>
       </tbody>
     </table>
   </div>
-
+ 
   <div class="block">
     <h3>Interactive and selectable tables</h3>
     <ul class="rules">
@@ -471,10 +474,10 @@ tabBtn.<span class="fn">addEventListener</span>(<span class="s">'keydown'</span>
     </table>
     <div class="note" style="margin-top:10px"><span class="ni">INFO</span>Wrap tables in <code>&lt;div style="overflow-x:auto"&gt;</code>. The div scrolls, not the page. At 200% zoom, no horizontal scroll should appear.</div>
   </div>
-
+ 
   <div class="src">REF: <a href="https://www.w3.org/TR/WCAG22/#info-and-relationships" target="_blank">WCAG 2.2 — 1.3.1</a> · <a href="https://webaim.org/standards/wcag/checklist" target="_blank">WebAIM</a></div>
 </div>
-
+ 
 <!-- 05 MODALS -->
 <div id="modals" class="section">
   <div class="sh">
@@ -483,7 +486,7 @@ tabBtn.<span class="fn">addEventListener</span>(<span class="s">'keydown'</span>
     <p class="desc">Modals must trap focus, respond to Escape, and return focus precisely. One of the most commonly broken patterns.</p>
     <div class="tags"><span class="tag ta">Level A</span><span class="tag tref">WCAG 2.1.1 · 2.1.2 · 4.1.2</span></div>
   </div>
-
+ 
   <div class="block">
     <h3>Required keyboard behaviour</h3>
     <ul class="rules">
@@ -492,7 +495,7 @@ tabBtn.<span class="fn">addEventListener</span>(<span class="s">'keydown'</span>
       <li>Escape closes and returns focus to exactly the element that triggered it</li>
     </ul>
   </div>
-
+ 
   <div class="block">
     <h3>Required ARIA markup</h3>
     <pre><span class="k">&lt;div</span>
@@ -507,27 +510,27 @@ tabBtn.<span class="fn">addEventListener</span>(<span class="s">'keydown'</span>
 <span class="k">&lt;/div&gt;</span></pre>
     <div class="note"><span class="ni">INFO</span>Pair <code>aria-modal="true"</code> with the <code>inert</code> attribute on the page background for full browser support.</div>
   </div>
-
+ 
   <div class="block">
     <h3>Focus management pattern</h3>
     <pre><span class="k">let</span> trigger; <span class="c">// always store ref before opening</span>
-
+ 
 <span class="k">function</span> <span class="fn">openModal</span>(el) {
   trigger = el;
   modal.removeAttribute(<span class="s">'hidden'</span>);
   modalHeading.<span class="fn">focus</span>();
 }
-
+ 
 <span class="k">function</span> <span class="fn">closeModal</span>() {
   modal.setAttribute(<span class="s">'hidden'</span>, <span class="s">''</span>);
   trigger.<span class="fn">focus</span>(); <span class="c">// always return to exact trigger</span>
 }</pre>
     <div class="danger"><span class="ni">ERR</span>Never use <code>role="dialog"</code> on side panels that don't trap focus. Use <code>role="region"</code> with <code>aria-label</code> instead.</div>
   </div>
-
+ 
   <div class="src">REF: <a href="https://www.a11y-collective.com/blog/modal-accessibility/" target="_blank">A11Y Collective: Modal Accessibility</a> · <a href="https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/" target="_blank">W3C APG Dialog Pattern</a></div>
 </div>
-
+ 
 <!-- 06 FOCUS -->
 <div id="focus" class="section">
   <div class="sh">
@@ -536,7 +539,7 @@ tabBtn.<span class="fn">addEventListener</span>(<span class="s">'keydown'</span>
     <p class="desc">Where focus lands after interactions is as important as what receives it. WCAG 2.2 added new rules here.</p>
     <div class="tags"><span class="tag taa">Level AA</span><span class="tag tnew">New in WCAG 2.2</span><span class="tag tref">WCAG 2.4.11 · 2.4.3 · 2.4.7</span></div>
   </div>
-
+ 
   <div class="block">
     <h3>The three rules</h3>
     <div class="g2">
@@ -545,7 +548,7 @@ tabBtn.<span class="fn">addEventListener</span>(<span class="s">'keydown'</span>
     </div>
     <div class="scard" style="margin-top:10px"><div class="slabel">Never move focus uninvited</div><div class="sval">Only move focus as a direct response to a user action. Never on toast, loading state, or background updates.</div></div>
   </div>
-
+ 
   <div class="block">
     <h3>Focus routing reference</h3>
     <table>
@@ -561,23 +564,23 @@ tabBtn.<span class="fn">addEventListener</span>(<span class="s">'keydown'</span>
       </tbody>
     </table>
   </div>
-
+ 
   <div class="block">
     <h3>WCAG 2.2 — focus must not be obscured (2.4.11)</h3>
     <div class="warn"><span class="ni">WARN</span><span>Focused elements must not be hidden behind sticky headers, banners, or chat widgets. Fix with <code>scroll-padding-top</code>.</span></div>
     <pre>html {
   scroll-padding-top: 80px; <span class="c">/* height of your sticky header */</span>
 }
-
+ 
 :focus-visible {
   outline: 2px solid currentColor;
   outline-offset: 2px;
 }</pre>
   </div>
-
+ 
   <div class="src">REF: <a href="https://www.accessibility.build/blog/complete-guide-wcag-2-2-compliance-developers-2024" target="_blank">Complete WCAG 2.2 Guide</a> · <a href="https://www.allyscan.com/en/blog/wcag-22-complete-guide" target="_blank">AllyScan WCAG 2.2</a></div>
 </div>
-
+ 
 <!-- 07 ARIA -->
 <div id="aria" class="section">
   <div class="sh">
@@ -586,9 +589,9 @@ tabBtn.<span class="fn">addEventListener</span>(<span class="s">'keydown'</span>
     <p class="desc">ARIA supplements native HTML — it should be your last resort, not your first move.</p>
     <div class="tags"><span class="tag ta">Level A</span><span class="tag taa">Level AA</span><span class="tag tref">WCAG 4.1.2 · 4.1.3</span></div>
   </div>
-
+ 
   <div class="danger"><span class="ni">ERR</span><strong style="color:var(--text)">First rule of ARIA:</strong> don't use it if native HTML does the job. <code>&lt;button&gt;</code> always beats <code>&lt;div role="button"&gt;</code>. Native elements come with keyboard handling and screen reader support for free.</div>
-
+ 
   <div class="block">
     <h3>Common attributes</h3>
     <table>
@@ -605,7 +608,7 @@ tabBtn.<span class="fn">addEventListener</span>(<span class="s">'keydown'</span>
       </tbody>
     </table>
   </div>
-
+ 
   <div class="block">
     <h3>Live region pattern</h3>
     <div class="warn"><span class="ni">WARN</span>Never announce by injecting a new element. Update text inside a <strong style="color:var(--text)">pre-existing</strong> live region that lives in the DOM from page load.</div>
@@ -618,10 +621,10 @@ tabBtn.<span class="fn">addEventListener</span>(<span class="s">'keydown'</span>
     <pre><span class="k">function</span> <span class="fn">announce</span>(msg) {
   <span class="k">const</span> el = document.<span class="fn">getElementById</span>(<span class="s">'sr-announce'</span>);
   el.textContent = <span class="s">''</span>; <span class="c">// clear first — forces re-read of same text</span>
-  <span class="fn">setTimeout</span>(() =&gt; { el.textContent = msg; }, <span class="v">50</span>);
+  <span class="fn">setTimeout</span>(() => { el.textContent = msg; }, <span class="v">50</span>);
 }</pre>
   </div>
-
+ 
   <div class="block">
     <h3>Live region types</h3>
     <table>
@@ -633,7 +636,7 @@ tabBtn.<span class="fn">addEventListener</span>(<span class="s">'keydown'</span>
       </tbody>
     </table>
   </div>
-
+ 
   <div class="block">
     <h3>sr-only utility class</h3>
     <pre>.sr-only {
@@ -646,10 +649,10 @@ tabBtn.<span class="fn">addEventListener</span>(<span class="s">'keydown'</span>
   border: 0;
 }</pre>
   </div>
-
+ 
   <div class="src">REF: <a href="https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA" target="_blank">MDN ARIA docs</a> · <a href="https://www.w3.org/WAI/ARIA/apg/" target="_blank">W3C ARIA APG</a></div>
 </div>
-
+ 
 <!-- 08 CONTRAST -->
 <div id="contrast" class="section">
   <div class="sh">
@@ -658,7 +661,7 @@ tabBtn.<span class="fn">addEventListener</span>(<span class="s">'keydown'</span>
     <p class="desc">Color must never be the only way information is conveyed. Contrast ratios are non-negotiable.</p>
     <div class="tags"><span class="tag taa">Level AA</span><span class="tag tref">WCAG 1.4.1 · 1.4.3 · 1.4.11</span></div>
   </div>
-
+ 
   <div class="block">
     <h3>Required contrast ratios</h3>
     <table>
@@ -672,7 +675,7 @@ tabBtn.<span class="fn">addEventListener</span>(<span class="s">'keydown'</span>
       </tbody>
     </table>
   </div>
-
+ 
   <div class="block">
     <h3>Color-only violations and fixes</h3>
     <div class="danger" style="margin-bottom:10px"><span class="ni">ERR</span>Applies to: error states, status badges, chart series, required fields, active/inactive states, link text in body copy.</div>
@@ -687,7 +690,7 @@ tabBtn.<span class="fn">addEventListener</span>(<span class="s">'keydown'</span>
       </tbody>
     </table>
   </div>
-
+ 
   <div class="block">
     <h3>Tooling</h3>
     <ul class="rules">
@@ -699,7 +702,7 @@ tabBtn.<span class="fn">addEventListener</span>(<span class="s">'keydown'</span>
     <div class="note"><span class="ni">INFO</span>Always verify in the rendered browser. Browser rendering can differ from design tool values.</div>
   </div>
 </div>
-
+ 
 <!-- 09 TESTING -->
 <div id="testing" class="section">
   <div class="sh">
@@ -707,7 +710,7 @@ tabBtn.<span class="fn">addEventListener</span>(<span class="s">'keydown'</span>
     <h2>Testing checklist</h2>
     <p class="desc">Automated tools catch ~30–40% of issues. Manual testing is always required for the rest.</p>
   </div>
-
+ 
   <div class="block">
     <h3>Manual protocol — run before every release</h3>
     <ul class="checks">
@@ -722,7 +725,7 @@ tabBtn.<span class="fn">addEventListener</span>(<span class="s">'keydown'</span>
       <li><span class="chk"></span>Disable CSS — verify logical reading order matches visual order</li>
     </ul>
   </div>
-
+ 
   <div class="block">
     <h3>Automated tools</h3>
     <table>
@@ -735,7 +738,7 @@ tabBtn.<span class="fn">addEventListener</span>(<span class="s">'keydown'</span>
     </table>
     <div class="warn" style="margin-top:10px"><span class="ni">WARN</span>Automated tools cannot detect: missing focus management, incorrect keyboard patterns, poor accessible names that are technically present, or reading order failures.</div>
   </div>
-
+ 
   <div class="block">
     <h3>Screen reader matrix</h3>
     <table>
@@ -748,7 +751,7 @@ tabBtn.<span class="fn">addEventListener</span>(<span class="s">'keydown'</span>
       </tbody>
     </table>
   </div>
-
+ 
   <div class="block">
     <h3>7 rules that catch 80% of failures</h3>
     <ul class="rules">
@@ -761,11 +764,11 @@ tabBtn.<span class="fn">addEventListener</span>(<span class="s">'keydown'</span>
       <li>Focus always returns to the triggering element when an overlay closes</li>
     </ul>
   </div>
-
+ 
   <div class="src">REF: <a href="https://www.w3.org/TR/WCAG22/" target="_blank">WCAG 2.2 spec</a> · <a href="https://webaim.org/standards/wcag/checklist" target="_blank">WebAIM</a> · <a href="https://www.w3.org/WAI/ARIA/apg/" target="_blank">W3C APG</a> · <a href="https://www.wcag.com/developers/" target="_blank">wcag.com</a></div>
 </div>
-
-
+ 
+ 
 <!-- 10 COLUMN NAVIGATION -->
 <div id="columns" class="section">
   <div class="sh">
@@ -774,7 +777,7 @@ tabBtn.<span class="fn">addEventListener</span>(<span class="s">'keydown'</span>
     <p class="desc">Multi-column layouts need two independent entry points: landmark jumping (R key in screen readers) and Tab-based header navigation. Both must work independently.</p>
     <div class="tags"><span class="tag ta">Level A</span><span class="tag tref">WCAG 2.1.1 · 1.3.1 · 2.4.3</span></div>
   </div>
-
+ 
   <div class="block">
     <h3>Moving between columns</h3>
     <table>
@@ -790,7 +793,7 @@ tabBtn.<span class="fn">addEventListener</span>(<span class="s">'keydown'</span>
       </tbody>
     </table>
   </div>
-
+ 
   <div class="block">
     <h3>Column header — the anchor point</h3>
     <p style="font-size:13px;color:var(--text-muted);margin-bottom:10px">The column header is the most important focusable element in the layout. It must announce everything a user needs before entering the column.</p>
@@ -802,7 +805,7 @@ tabBtn.<span class="fn">addEventListener</span>(<span class="s">'keydown'</span>
       <li><strong style="color:var(--red)">After reordering:</strong> every column header's <code>aria-label</code> must update to reflect the new position — this is the most commonly missed step in reorder implementations</li>
     </ul>
   </div>
-
+ 
   <div class="block">
     <h3>Navigating within a column</h3>
     <table>
@@ -817,7 +820,7 @@ tabBtn.<span class="fn">addEventListener</span>(<span class="s">'keydown'</span>
       </tbody>
     </table>
   </div>
-
+ 
   <div class="block">
     <h3>Column reorder — keyboard drag spec</h3>
     <div class="sub">Layer 1 — column header menu (··· button)</div>
@@ -837,10 +840,10 @@ tabBtn.<span class="fn">addEventListener</span>(<span class="s">'keydown'</span>
     </table>
     <div class="warn"><span class="ni">WARN</span>After any drop, ALL column header <code>aria-label</code>s must update: <em>"FB DM, column 1 of 3"</em>, <em>"FB Post, column 2 of 3"</em>, <em>"TW Post, column 3 of 3"</em>. The full new order must also be announced via <code>aria-live</code>.</div>
   </div>
-
+ 
   <div class="src">REF: <a href="https://www.w3.org/WAI/WCAG22/Techniques/aria/ARIA11" target="_blank">WCAG Technique ARIA11 — Landmark Regions</a> · <a href="https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/" target="_blank">APG — Developing a Keyboard Interface</a> · <a href="https://www.w3.org/TR/WCAG22/#keyboard" target="_blank">WCAG 2.2 — 2.1.1 Keyboard</a></div>
 </div>
-
+ 
 <!-- 11 DROPDOWN WITH SEARCH -->
 <div id="dropdown" class="section">
   <div class="sh">
@@ -849,7 +852,7 @@ tabBtn.<span class="fn">addEventListener</span>(<span class="s">'keydown'</span>
     <p class="desc">A searchable dropdown is a combobox pattern. Three focus zones — trigger button, search input, listbox — each with distinct keyboard behaviours.</p>
     <div class="tags"><span class="tag ta">Level A</span><span class="tag tref">WCAG 2.1.1 · 4.1.2</span></div>
   </div>
-
+ 
   <div class="block">
     <h3>Zone 1 — trigger button (dropdown closed)</h3>
     <table>
@@ -863,7 +866,7 @@ tabBtn.<span class="fn">addEventListener</span>(<span class="s">'keydown'</span>
       </tbody>
     </table>
   </div>
-
+ 
   <div class="block">
     <h3>Zone 2 — search input (dropdown open)</h3>
     <table>
@@ -879,7 +882,7 @@ tabBtn.<span class="fn">addEventListener</span>(<span class="s">'keydown'</span>
       </tbody>
     </table>
   </div>
-
+ 
   <div class="block">
     <h3>Zone 3 — listbox (focus on an option)</h3>
     <table>
@@ -896,7 +899,7 @@ tabBtn.<span class="fn">addEventListener</span>(<span class="s">'keydown'</span>
       </tbody>
     </table>
   </div>
-
+ 
   <div class="block">
     <h3>Multi-select variant</h3>
     <ul class="rules">
@@ -906,7 +909,7 @@ tabBtn.<span class="fn">addEventListener</span>(<span class="s">'keydown'</span>
       <li>Include a "Clear all" option keyboard users can reach — first item in list (reachable via <span class="kbd">Home</span>) or a dedicated button above the list</li>
     </ul>
   </div>
-
+ 
   <div class="block">
     <h3>Critical violations — what must never happen</h3>
     <div class="danger" style="margin-bottom:8px"><span class="ni">ERR</span><strong style="color:var(--text)">Tab must never navigate through list options.</strong> Tab inside dropdown = close and exit. 20 options = 20+ Tab presses to escape. Keyboard trap equivalent.</div>
@@ -914,10 +917,10 @@ tabBtn.<span class="fn">addEventListener</span>(<span class="s">'keydown'</span>
     <div class="danger" style="margin-bottom:8px"><span class="ni">ERR</span><strong style="color:var(--text)">Never lose search text when user arrows into list.</strong> User types "fb", arrows into results — the input must still show "fb".</div>
     <div class="danger"><span class="ni">ERR</span><strong style="color:var(--text)">Debounce result count announcements.</strong> 150–200ms minimum. Without debouncing, typing "facebook" = 8 consecutive announcements that interrupt and disorient.</div>
   </div>
-
+ 
   <div class="src">REF: <a href="https://www.w3.org/WAI/ARIA/apg/patterns/combobox/" target="_blank">APG — Combobox Pattern</a> · <a href="https://www.w3.org/WAI/ARIA/apg/patterns/listbox/" target="_blank">APG — Listbox Pattern</a> · <a href="https://www.w3.org/TR/WCAG22/#keyboard" target="_blank">WCAG 2.2 — 2.1.1 Keyboard</a> · <a href="https://www.w3.org/TR/WCAG22/#name-role-value" target="_blank">WCAG 2.2 — 4.1.2 Name, Role, Value</a></div>
 </div>
-
+ 
 <!-- 12 TABS FULL SPEC -->
 <div id="tabs2" class="section">
   <div class="sh">
@@ -926,7 +929,7 @@ tabBtn.<span class="fn">addEventListener</span>(<span class="s">'keydown'</span>
     <p class="desc">The entire tab list = one Tab stop. Arrow keys navigate between tabs. Tab enters the panel. This is the most commonly mis-implemented widget.</p>
     <div class="tags"><span class="tag ta">Level A</span><span class="tag tref">WCAG 2.1.1 · 2.4.3 · 4.1.2</span></div>
   </div>
-
+ 
   <div class="block">
     <h3>Complete keyboard map</h3>
     <table>
@@ -942,7 +945,7 @@ tabBtn.<span class="fn">addEventListener</span>(<span class="s">'keydown'</span>
       </tbody>
     </table>
   </div>
-
+ 
   <div class="block">
     <h3>Automatic vs manual activation</h3>
     <div class="g2">
@@ -958,7 +961,7 @@ tabBtn.<span class="fn">addEventListener</span>(<span class="s">'keydown'</span>
       </div>
     </div>
   </div>
-
+ 
   <div class="block">
     <h3>Screen reader announcements — design these deliberately</h3>
     <table>
@@ -973,7 +976,7 @@ tabBtn.<span class="fn">addEventListener</span>(<span class="s">'keydown'</span>
       </tbody>
     </table>
   </div>
-
+ 
   <div class="block">
     <h3>Required markup</h3>
     <pre><span class="k">&lt;div</span> <span class="a">role</span>=<span class="s">"tablist"</span> <span class="a">aria-label</span>=<span class="s">"Conversation sections"</span><span class="k">&gt;</span>
@@ -985,7 +988,7 @@ tabBtn.<span class="fn">addEventListener</span>(<span class="s">'keydown'</span>
 <span class="k">&lt;div</span> <span class="a">role</span>=<span class="s">"tabpanel"</span> <span class="a">id</span>=<span class="s">"panel-1"</span> <span class="a">aria-labelledby</span>=<span class="s">"tab-1"</span> <span class="a">tabindex</span>=<span class="s">"0"</span><span class="k">&gt;</span>...<span class="k">&lt;/div&gt;</span>
 <span class="k">&lt;div</span> <span class="a">role</span>=<span class="s">"tabpanel"</span> <span class="a">id</span>=<span class="s">"panel-2"</span> <span class="a">aria-labelledby</span>=<span class="s">"tab-2"</span> <span class="a">tabindex</span>=<span class="s">"0"</span> <span class="a">inert</span><span class="k">&gt;</span>...<span class="k">&lt;/div&gt;</span></pre>
   </div>
-
+ 
   <div class="block">
     <h3>Critical violations</h3>
     <div class="danger" style="margin-bottom:8px"><span class="ni">ERR</span><strong style="color:var(--text)">Never make each tab button a separate Tab stop.</strong> Tablist = 1 Tab stop. Use roving tabindex: active tab = <code>tabindex="0"</code>, all others = <code>tabindex="-1"</code>.</div>
@@ -993,10 +996,10 @@ tabBtn.<span class="fn">addEventListener</span>(<span class="s">'keydown'</span>
     <div class="danger" style="margin-bottom:8px"><span class="ni">ERR</span><strong style="color:var(--text)">Never hide inactive panels with <code>display:none</code>.</strong> Use the <code>inert</code> attribute instead. <code>display:none</code> breaks focus management when switching tabs.</div>
     <div class="danger"><span class="ni">ERR</span><strong style="color:var(--text)">Don't move focus when tab content loads.</strong> The user is still on the tab list — they decide when to enter the panel with Tab.</div>
   </div>
-
+ 
   <div class="src">REF: <a href="https://www.w3.org/WAI/ARIA/apg/patterns/tabs/" target="_blank">APG — Tabs Pattern</a> · <a href="https://www.w3.org/WAI/ARIA/apg/patterns/tabs/examples/tabs-manual/" target="_blank">APG — Manual Activation Example</a> · <a href="https://www.w3.org/TR/WCAG22/#keyboard" target="_blank">WCAG 2.2 — 2.1.1 Keyboard</a> · <a href="https://www.w3.org/TR/WCAG22/#focus-order" target="_blank">WCAG 2.2 — 2.4.3 Focus Order</a></div>
 </div>
-
+ 
 <!-- 13 CREATE MESSAGE FLOW -->
 <div id="msgflow" class="section">
   <div class="sh">
@@ -1005,7 +1008,7 @@ tabBtn.<span class="fn">addEventListener</span>(<span class="s">'keydown'</span>
     <p class="desc">A concrete end-to-end example of accessible form validation — from first Tab to success announcement. Every step has a defined accessible state.</p>
     <div class="tags"><span class="tag ta">Level A</span><span class="tag taa">Level AA</span><span class="tag tref">WCAG 3.3.1 · 3.3.3</span></div>
   </div>
-
+ 
   <div class="block">
     <h3>The complete flow</h3>
     <table>
@@ -1020,7 +1023,7 @@ tabBtn.<span class="fn">addEventListener</span>(<span class="s">'keydown'</span>
       </tbody>
     </table>
   </div>
-
+ 
   <div class="block">
     <h3>Step 4 — error fires: what must happen simultaneously</h3>
     <ul class="rules">
@@ -1030,21 +1033,21 @@ tabBtn.<span class="fn">addEventListener</span>(<span class="s">'keydown'</span>
     </ul>
     <div class="note"><span class="ni">INFO</span>Focus moves to the field that needs fixing. The user can act immediately — no extra navigation required.</div>
   </div>
-
+ 
   <div class="block">
     <h3>Step 5 — clear errors eagerly, not lazily</h3>
     <div class="warn"><span class="ni">WARN</span><strong style="color:var(--text)">Clear the error on change</strong>, not on next submit attempt. Waiting until resubmit to clear the error is confusing — the user doesn't know if their fix worked.</div>
     <pre><span class="c">// Clear error immediately when user selects a channel</span>
-channelInput.<span class="fn">addEventListener</span>(<span class="s">'change'</span>, () =&gt; {
+channelInput.<span class="fn">addEventListener</span>(<span class="s">'change'</span>, () => {
   channelInput.setAttribute(<span class="s">'aria-invalid'</span>, <span class="s">'false'</span>);
   errorEl.textContent = <span class="s">''</span>;
   <span class="fn">announce</span>(<span class="s">'Facebook Page selected. Channel, valid.'</span>);
 });</pre>
   </div>
-
+ 
   <div class="src">REF: <a href="https://www.w3.org/TR/WCAG22/#error-identification" target="_blank">WCAG 2.2 — 3.3.1 Error Identification</a> · <a href="https://www.w3.org/TR/WCAG22/#error-suggestion" target="_blank">WCAG 2.2 — 3.3.3 Error Suggestion</a> · <a href="https://www.w3.org/WAI/WCAG22/Techniques/aria/ARIA21" target="_blank">WCAG Technique ARIA21 — aria-invalid</a></div>
 </div>
-
+ 
 <!-- 14 CHECKBOX SELECT ALL -->
 <div id="checkbox" class="section">
   <div class="sh">
@@ -1053,7 +1056,7 @@ channelInput.<span class="fn">addEventListener</span>(<span class="s">'change'</
     <p class="desc">The select-all checkbox has three states: checked, unchecked, and indeterminate. The indeterminate state must be set via JavaScript — there is no HTML attribute for it.</p>
     <div class="tags"><span class="tag ta">Level A</span><span class="tag tref">WCAG 1.3.1 · 4.1.2</span></div>
   </div>
-
+ 
   <div class="block">
     <h3>Three states</h3>
     <div class="g2">
@@ -1062,18 +1065,18 @@ channelInput.<span class="fn">addEventListener</span>(<span class="s">'change'</
     </div>
     <div class="scard" style="margin-top:10px"><div class="slabel">Indeterminate</div><div class="sval">Some items selected. Set via JS: <code>checkbox.indeterminate = true</code>. Screen reader announces automatically as <em>"mixed"</em> — no extra ARIA needed.</div></div>
   </div>
-
+ 
   <div class="block">
     <h3>Required markup</h3>
     <pre><span class="k">&lt;fieldset&gt;</span>
   <span class="k">&lt;legend&gt;</span>Team members<span class="k">&lt;/legend&gt;</span>
-
+ 
   <span class="k">&lt;div&gt;</span>
     <span class="k">&lt;input</span> <span class="a">type</span>=<span class="s">"checkbox"</span> <span class="a">id</span>=<span class="s">"select-all"</span>
            <span class="a">aria-controls</span>=<span class="s">"item1 item2 item3"</span><span class="k">&gt;</span>  <span class="c">← declares what it controls</span>
     <span class="k">&lt;label</span> <span class="a">for</span>=<span class="s">"select-all"</span><span class="k">&gt;</span>Select all<span class="k">&lt;/label&gt;</span>
   <span class="k">&lt;/div&gt;</span>
-
+ 
   <span class="k">&lt;div&gt;</span>
     <span class="k">&lt;input</span> <span class="a">type</span>=<span class="s">"checkbox"</span> <span class="a">id</span>=<span class="s">"item1"</span> <span class="a">name</span>=<span class="s">"items"</span><span class="k">&gt;</span>
     <span class="k">&lt;label</span> <span class="a">for</span>=<span class="s">"item1"</span><span class="k">&gt;</span>Alice<span class="k">&lt;/label&gt;</span>
@@ -1081,21 +1084,21 @@ channelInput.<span class="fn">addEventListener</span>(<span class="s">'change'</
   <span class="c">&lt;!-- repeat for item2, item3 ... --&gt;</span>
 <span class="k">&lt;/fieldset&gt;</span></pre>
   </div>
-
+ 
   <div class="block">
     <h3>JavaScript logic</h3>
     <pre><span class="k">const</span> selectAll = document.<span class="fn">getElementById</span>(<span class="s">'select-all'</span>);
 <span class="k">const</span> items = document.<span class="fn">querySelectorAll</span>(<span class="s">'input[name="items"]'</span>);
-
-selectAll.<span class="fn">addEventListener</span>(<span class="s">'change'</span>, () =&gt; {
-  items.<span class="fn">forEach</span>(item =&gt; item.checked = selectAll.checked);
+ 
+selectAll.<span class="fn">addEventListener</span>(<span class="s">'change'</span>, () => {
+  items.<span class="fn">forEach</span>(item => item.checked = selectAll.checked);
   <span class="fn">announce</span>(selectAll.checked ? <span class="s">'All items selected'</span> : <span class="s">'All items deselected'</span>);
 });
-
+ 
 <span class="k">function</span> <span class="fn">updateSelectAll</span>() {
   <span class="k">const</span> total = items.length;
-  <span class="k">const</span> checked = [...items].<span class="fn">filter</span>(i =&gt; i.checked).length;
-
+  <span class="k">const</span> checked = [...items].<span class="fn">filter</span>(i => i.checked).length;
+ 
   <span class="k">if</span> (checked === <span class="v">0</span>) {
     selectAll.checked = <span class="v">false</span>;
     selectAll.indeterminate = <span class="v">false</span>;
@@ -1110,11 +1113,11 @@ selectAll.<span class="fn">addEventListener</span>(<span class="s">'change'</spa
     <span class="fn">announce</span>(<span class="s">`${checked} of ${total} items selected`</span>);
   }
 }
-
-items.<span class="fn">forEach</span>(item =&gt; item.<span class="fn">addEventListener</span>(<span class="s">'change'</span>, updateSelectAll));</pre>
+ 
+items.<span class="fn">forEach</span>(item => item.<span class="fn">addEventListener</span>(<span class="s">'change'</span>, updateSelectAll));</pre>
     <div class="note" style="margin-top:10px"><span class="ni">INFO</span><em>"2 of 5 selected"</em> via <code>aria-live</code> is far more useful than the checkbox state alone. Always announce the count — don't rely on screen readers interpreting "mixed" as meaningful context.</div>
   </div>
-
+ 
   <div class="block">
     <h3>Key rules</h3>
     <ul class="rules">
@@ -1125,26 +1128,119 @@ items.<span class="fn">forEach</span>(item =&gt; item.<span class="fn">addEventL
       <li>Announce count changes via <code>aria-live</code> — <em>"2 of 5 selected"</em> is far more useful than just "mixed"</li>
     </ul>
   </div>
-
+ 
   <div class="src">REF: <a href="https://www.w3.org/WAI/ARIA/apg/patterns/checkbox/" target="_blank">APG — Checkbox Pattern (tri-state)</a> · <a href="https://www.w3.org/TR/WCAG22/#info-and-relationships" target="_blank">WCAG 2.2 — 1.3.1 Info and Relationships</a> · <a href="https://www.w3.org/TR/WCAG22/#name-role-value" target="_blank">WCAG 2.2 — 4.1.2 Name, Role, Value</a></div>
 </div>
-
+ 
+<!-- 15 BREADCRUMB -->
+<div id="breadcrumb" class="section">
+  <div class="sh">
+    <div class="num">15 / BREADCRUMB NAVIGATION</div>
+    <h2>Breadcrumb navigation</h2>
+    <p class="desc">A breadcrumb trail shows the user's location in the site hierarchy — Home &gt; Cases &gt; Case #123. It must be a landmark, use an ordered list, and mark the current page with <code>aria-current="page"</code>.</p>
+    <div class="tags"><span class="tag ta">Level A</span><span class="tag tref">WCAG 1.3.1 · 2.4.8 · 4.1.2</span></div>
+  </div>
+ 
+  <div class="block">
+    <h3>Required markup</h3>
+    <pre><span class="k">&lt;nav</span> <span class="a">aria-label</span>=<span class="s">"Breadcrumb"</span><span class="k">&gt;</span>
+  <span class="k">&lt;ol&gt;</span>
+    <span class="k">&lt;li&gt;&lt;a</span> <span class="a">href</span>=<span class="s">"/"</span><span class="k">&gt;</span>Home<span class="k">&lt;/a&gt;&lt;/li&gt;</span>
+    <span class="k">&lt;li&gt;&lt;a</span> <span class="a">href</span>=<span class="s">"/cases"</span><span class="k">&gt;</span>Cases<span class="k">&lt;/a&gt;&lt;/li&gt;</span>
+    <span class="k">&lt;li&gt;&lt;a</span> <span class="a">href</span>=<span class="s">"/cases/123"</span>
+           <span class="a">aria-current</span>=<span class="s">"page"</span><span class="k">&gt;</span>Case #123<span class="k">&lt;/a&gt;&lt;/li&gt;</span>
+  <span class="k">&lt;/ol&gt;</span>
+<span class="k">&lt;/nav&gt;</span></pre>
+    <ul class="rules">
+      <li>Use <code>&lt;nav aria-label="Breadcrumb"&gt;</code> — this makes it a named navigation landmark, reachable via screen reader landmark navigation</li>
+      <li>Use an <code>&lt;ol&gt;</code> (ordered list) — the order of items is meaningful and screen readers announce the total count</li>
+      <li>Every item except the last must be a real <code>&lt;a&gt;</code> link that navigates somewhere</li>
+      <li>The current page item gets <code>aria-current="page"</code> — screen reader announces <em>"page, link"</em> or <em>"current page"</em> depending on AT</li>
+      <li>If the current page is not a link (just text), <code>aria-current</code> is optional — but a link is strongly preferred for consistency</li>
+    </ul>
+  </div>
+ 
+  <div class="block">
+    <h3>Separators — CSS only, never in the DOM</h3>
+    <div class="warn"><span class="ni">WARN</span>Never put separator characters ( / › &gt; ) in the HTML. They are visual decoration only. Screen readers would announce them — <em>"Home slash Cases slash Case 123"</em> — which is redundant and disorienting. Use CSS <code>::after</code> pseudo-elements instead.</div>
+    <pre><span class="c">/* Separator added via CSS — invisible to screen readers */</span>
+ol {
+  list-style: none;
+  display: flex;
+  gap: 8px;
+}
+ 
+li + li::before {
+  content: "/";         <span class="c">/* or "›" or ">" — purely visual */</span>
+  aria-hidden: true;    <span class="c">/* CSS pseudo-elements are already ignored by AT */</span>
+  color: var(--text-faint);
+  margin-right: 8px;
+}</pre>
+  </div>
+ 
+  <div class="block">
+    <h3>Keyboard behaviour</h3>
+    <p style="font-size:14px;color:var(--text-muted);margin-bottom:12px">Breadcrumb links are standard <code>&lt;a&gt;</code> elements — no special keyboard handling needed beyond what links already provide.</p>
+    <table>
+      <thead><tr><th>Key</th><th>What happens</th></tr></thead>
+      <tbody>
+        <tr><td><span class="kbd">Tab</span></td><td>Moves through each breadcrumb link in order</td></tr>
+        <tr><td><span class="kbd">Shift + Tab</span></td><td>Moves backwards through links</td></tr>
+        <tr><td><span class="kbd">Enter</span></td><td>Follows the link — navigates to that level</td></tr>
+      </tbody>
+    </table>
+    <div class="note"><span class="ni">INFO</span>The current page link is still focusable and still navigates — do not remove it from the tab order or disable it. Users may want to refresh or share the URL of the current page.</div>
+  </div>
+ 
+  <div class="block">
+    <h3>What screen readers announce</h3>
+    <table>
+      <thead><tr><th>Moment</th><th>Screen reader says</th><th>What makes it work</th></tr></thead>
+      <tbody>
+        <tr><td>Landmark jump (R key)</td><td><em>"Breadcrumb, navigation"</em></td><td><code>&lt;nav aria-label="Breadcrumb"&gt;</code></td></tr>
+        <tr><td>Tab onto first link</td><td><em>"Home, link, list 1 of 3"</em></td><td><code>&lt;ol&gt;</code> + <code>&lt;a&gt;</code></td></tr>
+        <tr><td>Tab onto current page</td><td><em>"Case 123, link, current page, 3 of 3"</em></td><td><code>aria-current="page"</code></td></tr>
+        <tr><td>Page loads / SPA route change</td><td>Breadcrumb updates silently</td><td>No announcement needed — user navigated intentionally</td></tr>
+      </tbody>
+    </table>
+  </div>
+ 
+  <div class="block">
+    <h3>SPA / dynamic breadcrumbs</h3>
+    <ul class="rules">
+      <li>When the route changes, update the breadcrumb DOM — the links and <code>aria-current</code> must reflect the new location</li>
+      <li>Do NOT announce the breadcrumb change via <code>aria-live</code> — the page title change and heading change are sufficient to orient the user after navigation</li>
+      <li>Move focus to the page <code>&lt;h1&gt;</code> or a skip target after route change — not to the breadcrumb</li>
+      <li>If the current page item changes from a link to plain text (or vice versa), ensure <code>aria-current</code> is updated accordingly</li>
+    </ul>
+  </div>
+ 
+  <div class="block">
+    <h3>Critical violations</h3>
+    <div class="danger" style="margin-bottom:8px"><span class="ni">ERR</span><strong style="color:var(--text)">Never use <code>role="list"</code> on a <code>&lt;ul&gt;</code> that has <code>list-style:none</code> in Safari/VoiceOver</strong> — removing list styling removes list semantics. Either keep list styling visible, use <code>&lt;ol&gt;</code>, or add <code>role="list"</code> explicitly to restore it.</div>
+    <div class="danger" style="margin-bottom:8px"><span class="ni">ERR</span><strong style="color:var(--text)">Never put separators in the DOM as text nodes or <code>&lt;span&gt;</code> elements</strong> — they will be read aloud by screen readers.</div>
+    <div class="danger"><span class="ni">ERR</span><strong style="color:var(--text)">Never label the nav with the same name as another nav on the page</strong> — if you have a main nav and a breadcrumb nav, they must have distinct <code>aria-label</code> values. Two navs both labelled <em>"Navigation"</em> are indistinguishable to screen reader users browsing landmarks.</div>
+  </div>
+ 
+  <div class="src">REF: <a href="https://www.w3.org/WAI/ARIA/apg/patterns/breadcrumb/" target="_blank">APG — Breadcrumb Pattern</a> · <a href="https://www.w3.org/WAI/ARIA/apg/patterns/breadcrumb/examples/breadcrumb/" target="_blank">APG — Breadcrumb Example</a> · <a href="https://www.w3.org/TR/WCAG22/#location" target="_blank">WCAG 2.2 — 2.4.8 Location</a> · <a href="https://www.w3.org/TR/WCAG22/#info-and-relationships" target="_blank">WCAG 2.2 — 1.3.1</a></div>
+</div>
+ 
 </main>
 </div>
-
+ 
 <script>
 // Navigation
 function show(id,el){event.preventDefault();document.querySelectorAll('.section').forEach(s=>s.classList.remove('visible'));document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));document.getElementById(id).classList.add('visible');if(el)el.classList.add('active');window.scrollTo(0,0);}
-
+ 
 // Search index — built from section headings and block titles
 const searchIndex = [];
-
+ 
 function buildIndex() {
   document.querySelectorAll('.section').forEach(sec => {
     const id = sec.id;
     const sectionTitle = sec.querySelector('.sh h2')?.textContent?.trim() || id;
     const num = sec.querySelector('.sh .num')?.textContent?.trim() || '';
-
+ 
     // Index block headings
     sec.querySelectorAll('.block').forEach(block => {
       const h3 = block.querySelector('h3');
@@ -1154,33 +1250,33 @@ function buildIndex() {
       const bodyText = block.innerText.substring(0, 300).replace(/\s+/g,' ').trim();
       searchIndex.push({ id, sectionTitle, num, blockTitle: title, body: bodyText, el: block });
     });
-
+ 
     // Also index section-level
     searchIndex.push({ id, sectionTitle, num, blockTitle: null, body: sec.querySelector('.sh .desc')?.textContent || '', el: null, isSection: true });
   });
 }
-
+ 
 function escapeRegex(s) { return s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'); }
-
+ 
 function highlight(text, query) {
   if (!query) return text;
   const re = new RegExp(`(${escapeRegex(query)})`, 'gi');
   return text.replace(re, '<mark>$1</mark>');
 }
-
+ 
 const searchBox = document.getElementById('sideSearch');
 const resultsEl = document.getElementById('searchResults');
 let activeIdx = -1;
 let currentResults = [];
-
+ 
 searchBox.addEventListener('input', () => {
   const q = searchBox.value.trim();
   if (q.length < 2) { resultsEl.innerHTML=''; resultsEl.classList.remove('visible'); return; }
-
+ 
   const re = new RegExp(escapeRegex(q), 'gi');
   const seen = new Set();
   currentResults = [];
-
+ 
   // Match sections and blocks
   searchIndex.forEach(item => {
     const haystack = `${item.sectionTitle} ${item.blockTitle||''} ${item.body}`;
@@ -1189,11 +1285,11 @@ searchBox.addEventListener('input', () => {
       if (!seen.has(key)) { seen.add(key); currentResults.push(item); }
     }
   });
-
+ 
   // Cap at 12
   currentResults = currentResults.slice(0, 12);
   activeIdx = -1;
-
+ 
   if (!currentResults.length) {
     resultsEl.innerHTML = `<div class="sr-empty">No results for "${q}"</div>`;
   } else {
@@ -1213,7 +1309,7 @@ searchBox.addEventListener('input', () => {
   }
   resultsEl.classList.add('visible');
 });
-
+ 
 searchBox.addEventListener('keydown', e => {
   const items = resultsEl.querySelectorAll('.sr-item');
   if (e.key === 'ArrowDown') { e.preventDefault(); activeIdx = Math.min(activeIdx+1, items.length-1); updateActive(items); }
@@ -1221,11 +1317,11 @@ searchBox.addEventListener('keydown', e => {
   else if (e.key === 'Enter' && activeIdx >= 0) { e.preventDefault(); selectResult(activeIdx); }
   else if (e.key === 'Escape') { closeSearch(); }
 });
-
+ 
 function updateActive(items) {
   items.forEach((el,i) => el.classList.toggle('active', i === activeIdx));
 }
-
+ 
 function selectResult(idx) {
   const r = currentResults[idx];
   if (!r) return;
@@ -1245,7 +1341,7 @@ function selectResult(idx) {
   }, 50);
   closeSearch();
 }
-
+ 
 function closeSearch() {
   searchBox.value = '';
   resultsEl.innerHTML = '';
@@ -1253,14 +1349,13 @@ function closeSearch() {
   activeIdx = -1;
   currentResults = [];
 }
-
+ 
 document.addEventListener('click', e => {
   if (!e.target.closest('.search-wrap')) closeSearch();
 });
-
+ 
 document.addEventListener('DOMContentLoaded', buildIndex);
 window.addEventListener('load', buildIndex);
 </script>
-
-
-</body></html>
+</body>
+</html>
